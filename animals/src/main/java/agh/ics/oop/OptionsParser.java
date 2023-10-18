@@ -2,10 +2,10 @@ package agh.ics.oop;
 import agh.ics.oop.model.MoveDirection;
 
 public class OptionsParser {
-    public static MoveDirection[] parse(String[] args) {
+    public static MoveDirection[] give_directions(String[] args) {
         int all_correct_moves=0;
         int pointer_to_act_move=0;
-        for(String arg : args) { //licze ile
+        for(String arg : args) { //licze ile mam poprawnych ruchow
             switch (arg) {
                 case "f" -> all_correct_moves += 1;
                 case "b" -> all_correct_moves += 1;
@@ -14,7 +14,7 @@ public class OptionsParser {
             }
         }
 
-        MoveDirection[] moves = new MoveDirection[all_correct_moves];
+        MoveDirection[] moves = new MoveDirection[all_correct_moves]; //tworze tablice
 
         for(String arg : args){
             switch (arg){

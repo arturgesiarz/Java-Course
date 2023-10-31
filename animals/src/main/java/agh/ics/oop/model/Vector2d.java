@@ -16,12 +16,12 @@ public class Vector2d {
     }
     @Override
     public String toString(){
-        return "("+x+","+y+")";
+        return "("+this.x+","+this.y+")";
     }
-    boolean precedes(Vector2d other){
+    public boolean precedes(Vector2d other){
         return other.x>=this.x && other.y>=this.y;
     }
-    boolean follows(Vector2d other){
+    public boolean follows(Vector2d other){
         return other.x<=this.x && other.y<=this.y;
     }
     public Vector2d add(Vector2d other){

@@ -1,5 +1,4 @@
 package agh.ics.oop.model;
-
 import java.util.Objects;
 
 public class Vector2d {
@@ -15,6 +14,7 @@ public class Vector2d {
     public int getY() {
         return y;
     }
+    @Override
     public String toString(){
         return "("+x+","+y+")";
     }
@@ -30,25 +30,21 @@ public class Vector2d {
     public Vector2d subtract(Vector2d other){
         return new Vector2d(this.x-other.x,this.y-other.y);
     }
-    public Vector2d upperRight(Vector2d other){
-        if(precedes(other)) return other;
-        if(follows(other)) return this;
-        return new Vector2d(Math.max(other.x, this.x),Math.max(other.y, this.y));
-    }
-    public Vector2d lowerLeft(Vector2d other){
-        if(precedes(other)) return this;
-        if(follows(other)) return other;
-        return new Vector2d(Math.min(other.x, this.x),Math.min(other.y, this.y));
-    }
+    public Vector2d upperRight(Vector2d other){ return new Vector2d(Math.max(other.x, this.x),Math.max(other.y, this.y));}
+    public Vector2d lowerLeft(Vector2d other){ return new Vector2d(Math.min(other.x, this.x),Math.min(other.y, this.y));}
     public Vector2d opposite(){
         return new Vector2d(-this.x,-this.y);
     }
-    @Override
-    public boolean equals(Object other){
-        if(this == other) return true; //rownosc referencji -> porownouje te same objekty w pamieci
-        if(other == null || this.getClass() != other.getClass()) return false; //nie mamy doczynienia z ta samo klasa
-        Vector2d vectorOther = (Vector2d) other;
-        return Objects.equals(this.x,vectorOther.x) && Objects.equals(this.y,vectorOther.y);
-    }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vector2d vector2d = (Vector2d) o;
+        return this.x == vector2d.x && this.y == vector2d.y;
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.x, this.y);
+    }
 }

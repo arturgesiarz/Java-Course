@@ -6,30 +6,21 @@ import static org.junit.jupiter.api.Assertions.*;
 class OptionsParserTest {
     @Test
     void giveDirectionsTest() {
-        String[] tab1 = new String[3]; // array with not all correct arguments
-        tab1[0] = "f";
-        tab1[1] = "l";
-        tab1[2] = "o";
+        String[] tab1 = {"f","l","o"}; // array with not all correct arguments
 
         MoveDirection[] tab1Solution = new MoveDirection[2];
         tab1Solution[0] = MoveDirection.FORWARD;
         tab1Solution[1] = MoveDirection.LEFT;
 
-        String[] tab2 = new String[3]; // array with all correct arguments
-        tab2[0] = "f";
-        tab2[1] = "r";
-        tab2[2] = "l";
+        String[] tab2 = {"f","r","l"}; // array with all correct arguments
 
         MoveDirection[] tab2Solution = new MoveDirection[3];
         tab2Solution[0] = MoveDirection.FORWARD;
         tab2Solution[1] = MoveDirection.RIGHT;
         tab2Solution[2] = MoveDirection.LEFT;
 
-        String[] tab3 = new String[3]; // array with all uncorrected arguments
-        tab3[0] = "x";
-        tab3[1] = "y";
-        tab3[2] = "z";
-
+        String[] tab3 = {"x","y","z"}; // array with all uncorrected arguments
+        
         MoveDirection[] tab3Solution = new MoveDirection[0];
 
         assertArrayEquals(tab1Solution, OptionsParser.giveDirections(tab1));

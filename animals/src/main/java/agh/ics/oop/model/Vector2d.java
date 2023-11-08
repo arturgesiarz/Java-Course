@@ -16,7 +16,7 @@ public class Vector2d {
     }
     @Override
     public String toString(){
-        return "("+this.x+","+this.y+")";
+        return "(%d,%d)".formatted(this.x,this.y);
     }
     public boolean precedes(Vector2d other){
         return other.x>=this.x && other.y>=this.y;

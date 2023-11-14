@@ -2,7 +2,6 @@ package agh.ics.oop;
 import agh.ics.oop.model.Animal;
 import agh.ics.oop.model.MoveDirection;
 import agh.ics.oop.model.Vector2d;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,10 +25,9 @@ public class Simulation {
 
         for(MoveDirection moveAnimal : this.movesList){
 
-            if(pointerToAnimal >= this.animalsList.size()){
+            if(pointerToAnimal >= this.animalsList.size()) {
                 pointerToAnimal = 0;
             }
-
             Animal animalActual = this.animalsList.get(pointerToAnimal);
             animalActual.move(moveAnimal);
             System.out.println("Zwierzę " + pointerToAnimal + " : " + animalActual.getPosition());

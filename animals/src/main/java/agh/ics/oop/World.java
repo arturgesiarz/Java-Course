@@ -9,9 +9,11 @@ import java.util.Objects;
 
 public class World {
     public static void main(String[] args){
-        Animal cow = new Animal( new Vector2d(3,4));
-        cow.move(MoveDirection.RIGHT);
-        System.out.println(cow);
+        List<MoveDirection> directions = OptionsParser.giveDirections(args);
+        List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4));
+        Simulation simulation = new Simulation(positions, directions);
+        simulation.run();
+
     }
     private static void run(List<MoveDirection> moves) {
         for (MoveDirection move : moves) {

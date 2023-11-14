@@ -24,7 +24,7 @@ public class Simulation {
     public void run(){
         int pointerToAnimal = 0;
 
-        for(MoveDirection moveAnimal : movesList){
+        for(MoveDirection moveAnimal : this.movesList){
 
             if(pointerToAnimal >= this.animalsList.size()){
                 pointerToAnimal = 0;

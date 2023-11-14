@@ -1,9 +1,16 @@
 package agh.ics.oop.model;
+import java.util.Objects;
 
 public class Animal {
     private MapDirection orientation;
     private Vector2d position;
 
+    public MapDirection getOrientation() {
+        return orientation;
+    }
+    public Vector2d getPosition() {
+        return position;
+    }
     public Animal() {
         this(new Vector2d(2,2));
     }
@@ -41,6 +48,16 @@ public class Animal {
 
         }
     }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Animal animal = (Animal) o;
+        return orientation == animal.orientation && Objects.equals(position, animal.position);
+    }
 
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(orientation, position);
+    }
 }

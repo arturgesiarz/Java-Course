@@ -1,22 +1,24 @@
 package agh.ics.oop.model;
 
 public class Animal {
-    private MapDirection orientation = MapDirection.NORTH;
-    private Vector2d position = new Vector2d(2,2);
+    private MapDirection orientation;
+    private Vector2d position;
 
-    public Animal(MapDirection orientation, Vector2d position) {
-        this.orientation = orientation;
+    public Animal() {
+        this(new Vector2d(2,2));
+    }
+    public Animal(Vector2d position){
+        this.orientation = MapDirection.NORTH;
         this.position = position;
     }
 
     @Override
     public String toString() {
-        return "Animal{" +
-                "orientation=" + this.orientation +
-                ", position=" + this.position +
-                '}';
+        return  "Orientacja zwierzecia to " + this.orientation +
+                ", pozycja zwierzecia to " + this.position + '.';
     }
-    boolean isAt(Vector2d position){
+
+    public boolean isAt(Vector2d position){
         return (position.equals(this.position));
     }
 

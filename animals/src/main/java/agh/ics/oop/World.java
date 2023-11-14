@@ -1,4 +1,5 @@
 package agh.ics.oop;
+import agh.ics.oop.model.Animal;
 import agh.ics.oop.model.MoveDirection;
 import agh.ics.oop.model.MapDirection;
 import agh.ics.oop.model.Vector2d;
@@ -6,7 +7,8 @@ import java.util.Objects;
 
 public class World {
     public static void main(String[] args){
-        
+        Animal cow = new Animal( new Vector2d(3,9));
+        System.out.println(cow);
     }
     private static void run(MoveDirection[] moves) {
         for (MoveDirection move : moves) {

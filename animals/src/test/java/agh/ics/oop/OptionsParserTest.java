@@ -1,30 +1,44 @@
 package agh.ics.oop;
 import agh.ics.oop.model.MoveDirection;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class OptionsParserTest {
     @Test
-    void giveDirectionsTest() {
-        String[] tab1 = {"f","l","o"}; // array with not all correct arguments
+    void giveDirectionsNotAllCorrectArguments() {
+        String[] tab1 = {"f", "l", "o"};
 
-        MoveDirection[] tab1Solution = new MoveDirection[2];
-        tab1Solution[0] = MoveDirection.FORWARD;
-        tab1Solution[1] = MoveDirection.LEFT;
+        List<MoveDirection> tab1Solution = new ArrayList<>();
+        tab1Solution.add(MoveDirection.FORWARD);
+        tab1Solution.add(MoveDirection.LEFT);
 
-        String[] tab2 = {"f","r","l"}; // array with all correct arguments
-
-        MoveDirection[] tab2Solution = new MoveDirection[3];
-        tab2Solution[0] = MoveDirection.FORWARD;
-        tab2Solution[1] = MoveDirection.RIGHT;
-        tab2Solution[2] = MoveDirection.LEFT;
-
-        String[] tab3 = {"x","y","z"}; // array with all uncorrected arguments
-        
-        MoveDirection[] tab3Solution = new MoveDirection[0];
-
-        assertArrayEquals(tab1Solution, OptionsParser.giveDirections(tab1));
-        assertArrayEquals(tab2Solution, OptionsParser.giveDirections(tab2));
-        assertArrayEquals(tab3Solution, OptionsParser.giveDirections(tab3));
+        assertEquals(tab1Solution, OptionsParser.giveDirections(tab1));
     }
+
+    @Test
+    void giveDirectionsAllCorrectArguments() {
+        String[] tab2 = {"f", "r", "l"};
+
+        List<MoveDirection> tab2Solution = new ArrayList<>();
+        tab2Solution.add(MoveDirection.FORWARD);
+        tab2Solution.add(MoveDirection.RIGHT);
+        tab2Solution.add(MoveDirection.LEFT);
+
+        assertEquals(tab2Solution, OptionsParser.giveDirections(tab2));
+    }
+
+    @Test
+    void giveDirectionsAnyCorrectArguments() {
+        String[] tab3 = {"x","y","z"};
+
+        List<MoveDirection> tab3Solution = new ArrayList<>();
+
+        assertEquals(tab3Solution, OptionsParser.giveDirections(tab3));
+    }
+
+
 }

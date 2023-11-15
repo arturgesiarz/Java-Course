@@ -23,14 +23,11 @@ public class Simulation {
     public void run(){
         int pointerToAnimal = 0;
 
-        for(MoveDirection moveAnimal : this.movesList){
+        for(MoveDirection moveAnimal : movesList){
 
-            if(pointerToAnimal >= this.animalsList.size()) {
-                pointerToAnimal = 0;
-            }
-            Animal animalActual = this.animalsList.get(pointerToAnimal);
+            Animal animalActual = animalsList.get(pointerToAnimal % animalsList.size());
             animalActual.move(moveAnimal);
-            System.out.println("Zwierzę " + pointerToAnimal + " : " + animalActual.getPosition());
+            System.out.println("Zwierzę " + ( pointerToAnimal % animalsList.size() ) + " : " + animalActual.getPosition());
 
             pointerToAnimal += 1;
         }

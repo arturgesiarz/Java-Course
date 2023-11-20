@@ -3,7 +3,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RectangularMap implements WorldMap {
-    private Map<Vector2d, Animal> animals = new HashMap<>();
+    private final Map<Vector2d, Animal> animals = new HashMap<>();
     private final Vector2d lowerLeft;
     private final Vector2d upperRight;
     RectangularMap(int width, int height){
@@ -11,13 +11,17 @@ public class RectangularMap implements WorldMap {
         upperRight = new Vector2d(width - 1,height - 1);
     }
     @Override
+    public boolean isOccupied(Vector2d position) {
+        return animals.containsKey(position);
+    }
+    @Override
     public boolean canMoveTo(Vector2d position) {
-        return upperRight.follows(position) && lowerLeft.precedes(position) && !animals.containsKey(position);
+        return upperRight.follows(position) && lowerLeft.precedes(position) && !isOccupied(position);
     }
     @Override
     public boolean place(Animal animal) {
         if(canMoveTo(animal.getPosition()) && animal.getOrientation() == MapDirection.NORTH
-                && !animals.containsKey(animal.getPosition())){
+                && !isOccupied(animal.getPosition())){
             animals.put(animal.getPosition(),animal);
             return true;
         }
@@ -26,12 +30,12 @@ public class RectangularMap implements WorldMap {
 
     @Override
     public void move(Animal animal, MoveDirection direction){
-        if(animals.containsKey(animal.getPosition())){
+        if(isOccupied(animal.getPosition())){
 
             Vector2d oldPositionAnimal = animal.getPosition();
             animal.move(direction);
 
-            if(canMoveTo(animal.getPosition()) && !animals.containsKey(animal.getPosition())){
+            if(canMoveTo(animal.getPosition()) && !isOccupied(animal.getPosition())){
                 animals.remove(oldPositionAnimal);
                 animals.put(animal.getPosition(),animal);
             }
@@ -39,8 +43,7 @@ public class RectangularMap implements WorldMap {
     }
 
     @Override
-    public boolean isOccupied(Vector2d position) {}
-
-    @Override
-    public Animal objectAt(Vector2d position) {}
+    public Animal objectAt(Vector2d position) {
+        return animals.get(position);
+    }
 }

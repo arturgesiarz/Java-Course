@@ -12,11 +12,12 @@ class AnimalTest {
         String[] args = {"r","b","b","l","x","21","?","b","b"};
         Animal animal = new Animal(new Vector2d(1,2));
         Vector2d animalEndPosition = new Vector2d(0,0);
+        RectangularMap map = new RectangularMap(5,5);
 
         //when
         List<MoveDirection> directions = OptionsParser.giveDirections(args);
         for(MoveDirection direction : directions){
-            animal.move(direction);
+            animal.move(direction,map);
         }
 
         //then
@@ -28,11 +29,12 @@ class AnimalTest {
         //given
         String[] args = {"r", "r", "f"};
         Animal animal = new Animal(new Vector2d(3,2));
+        RectangularMap map = new RectangularMap(5,5);
 
         //when
         List<MoveDirection> directions = OptionsParser.giveDirections(args);
         for(MoveDirection direction : directions){
-            animal.move(direction);
+            animal.move(direction,map);
         }
 
         //then
@@ -44,11 +46,12 @@ class AnimalTest {
         String[] args = {"r", "r", "f"};
         Animal animal = new Animal(new Vector2d(3,2));
         Vector2d animalEndPosition = new Vector2d(3,1);
+        RectangularMap map = new RectangularMap(5,5);
 
         //when
         List<MoveDirection> directions = OptionsParser.giveDirections(args);
         for(MoveDirection direction : directions){
-            animal.move(direction);
+            animal.move(direction,map);
         }
 
         //then
@@ -61,11 +64,12 @@ class AnimalTest {
         String[] args = {"f","f","f","f","f","r","f","f"};
         Animal animal = new Animal(new Vector2d(3,1));
         Vector2d animalEndPosition = new Vector2d(4,4);
+        RectangularMap map = new RectangularMap(5,5);
 
         //when
         List<MoveDirection> directions = OptionsParser.giveDirections(args);
         for(MoveDirection direction : directions){
-            animal.move(direction);
+            animal.move(direction,map);
         }
 
         //then
@@ -78,11 +82,12 @@ class AnimalTest {
         String[] args = {"r","r","f","f","f","r","f","f","f","f"};
         Animal animal = new Animal(new Vector2d(3,1));
         Vector2d animalEndPosition = new Vector2d(0,0);
+        RectangularMap map = new RectangularMap(5,5);
 
         //when
         List<MoveDirection> directions = OptionsParser.giveDirections(args);
         for(MoveDirection direction : directions){
-            animal.move(direction);
+            animal.move(direction,map);
         }
 
         //then

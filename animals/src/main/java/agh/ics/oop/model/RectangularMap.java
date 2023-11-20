@@ -1,12 +1,16 @@
 package agh.ics.oop.model;
+import agh.ics.oop.model.util.MapVisualizer;
+
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class RectangularMap implements WorldMap {
-    private final Map<Vector2d, Animal> animals = new HashMap<>();
     private final Vector2d lowerLeft;
     private final Vector2d upperRight;
-    RectangularMap(int width, int height){
+    private final Map<Vector2d, Animal> animals = new HashMap<>();
+
+    public RectangularMap(int width, int height){
         lowerLeft = new Vector2d(0,0);
         upperRight = new Vector2d(width - 1,height - 1);
     }
@@ -29,15 +33,22 @@ public class RectangularMap implements WorldMap {
     }
 
     @Override
-    public void move(Animal animal, MoveDirection direction){
-        if(isOccupied(animal.getPosition())){
+    public void move(Animal animal, MoveDirection direction) {
+        if (isOccupied(animal.getPosition())) {
+            if (direction == MoveDirection.LEFT || direction == MoveDirection.RIGHT) {
+                Animal actAnimal = animals.get(animal.getPosition());
+                actAnimal.move(direction, this); //enough with changed position not id, bc we go to left or right
+                animal.move(direction,this);
+            }
 
-            Vector2d oldPositionAnimal = animal.getPosition();
-            animal.move(direction);
+            else {
+                final Vector2d oldPosition = animal.getPosition();
+                animal.move(direction, this);
 
-            if(canMoveTo(animal.getPosition()) && !isOccupied(animal.getPosition())){
-                animals.remove(oldPositionAnimal);
-                animals.put(animal.getPosition(),animal);
+                if (canMoveTo(animal.getPosition()) && !isOccupied(animal.getPosition())) {
+                    animals.remove(oldPosition); //we must delete this bc id have to be changed
+                    animals.put(animal.getPosition(), animal);
+                }
             }
         }
     }
@@ -45,5 +56,22 @@ public class RectangularMap implements WorldMap {
     @Override
     public Animal objectAt(Vector2d position) {
         return animals.get(position);
+    }
+
+    @Override
+    public String toString() {
+        MapVisualizer visualizer = new MapVisualizer(RectangularMap.this);
+        return visualizer.draw(this.lowerLeft,this.upperRight);
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RectangularMap that = (RectangularMap) o;
+        return Objects.equals(lowerLeft, that.lowerLeft) && Objects.equals(upperRight, that.upperRight) && Objects.equals(animals, that.animals);
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(lowerLeft, upperRight, animals);
     }
 }

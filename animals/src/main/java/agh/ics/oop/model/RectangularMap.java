@@ -25,7 +25,18 @@ public class RectangularMap implements WorldMap {
     }
 
     @Override
-    public void move(Animal animal, MoveDirection direction){}
+    public void move(Animal animal, MoveDirection direction){
+        if(animals.containsKey(animal.getPosition())){
+
+            Vector2d oldPositionAnimal = animal.getPosition();
+            animal.move(direction);
+
+            if(canMoveTo(animal.getPosition()) && !animals.containsKey(animal.getPosition())){
+                animals.remove(oldPositionAnimal);
+                animals.put(animal.getPosition(),animal);
+            }
+        }
+    }
 
     @Override
     public boolean isOccupied(Vector2d position) {}

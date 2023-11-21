@@ -62,7 +62,7 @@ public class RectangularMap implements WorldMap {
                 if (canMoveTo(animal.getPosition()) && !isOccupied(animal.getPosition())) {
                     Animal newAnimal = new Animal(animal.getPosition());
 
-                    while(newAnimal.getOrientation() != animal.getOrientation()){
+                    while(newAnimal.getOrientation() != animal.getOrientation()){ //O(1)
                         newAnimal.move(MoveDirection.RIGHT,this);
                     }
 

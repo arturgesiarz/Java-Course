@@ -7,18 +7,10 @@ import java.util.Objects;
 
 public class World {
     public static void main(String[] args){
-        //List<MoveDirection> directions = OptionsParser.giveDirections(args);
-        //List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4));
-        //Simulation simulation = new Simulation(positions, directions);
-        //simulation.run();
-        List<MoveDirection> directions = List.of(MoveDirection.RIGHT,MoveDirection.RIGHT,MoveDirection.FORWARD,
-                MoveDirection.BACKWARD);
+        List<MoveDirection> directions = OptionsParser.giveDirections(args);
         List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4));
-        RectangularMap map = new RectangularMap(5,5);
-        Simulation simulation = new Simulation(positions, directions,map);
+        Simulation simulation = new Simulation(positions, directions, new RectangularMap(5,5));
         simulation.run();
-
-
     }
     private static void run(List<MoveDirection> moves) {
         for (MoveDirection move : moves) {

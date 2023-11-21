@@ -12,6 +12,10 @@ public class Simulation {
     private final List<MoveDirection> movesList;
     private final WorldMap worldMap;
 
+    public List<Animal> getAnimalsList() {
+        return animalsList;
+    }
+
     public Simulation(List<Vector2d> positionsList, List<MoveDirection> movesList, WorldMap worldMap){
         List<Animal> animalsList = new ArrayList<>();
 

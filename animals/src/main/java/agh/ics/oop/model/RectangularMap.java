@@ -14,6 +14,19 @@ public class RectangularMap implements WorldMap {
         lowerLeft = new Vector2d(0,0);
         upperRight = new Vector2d(width - 1,height - 1);
     }
+
+    public Vector2d getLowerLeft() {
+        return lowerLeft;
+    }
+
+    public Vector2d getUpperRight() {
+        return upperRight;
+    }
+
+    public Map<Vector2d, Animal> getAnimals() {
+        return animals;
+    }
+
     @Override
     public boolean isOccupied(Vector2d position) {
         return animals.containsKey(position);
@@ -45,9 +58,16 @@ public class RectangularMap implements WorldMap {
                 final Vector2d oldPosition = animal.getPosition();
                 animal.move(direction, this);
 
+
                 if (canMoveTo(animal.getPosition()) && !isOccupied(animal.getPosition())) {
+                    Animal newAnimal = new Animal(animal.getPosition());
+
+                    while(newAnimal.getOrientation() != animal.getOrientation()){
+                        newAnimal.move(MoveDirection.RIGHT,this);
+                    }
+
                     animals.remove(oldPosition); //we must delete this bc id have to be changed
-                    animals.put(animal.getPosition(), animal);
+                    animals.put(newAnimal.getPosition(), newAnimal);
                 }
             }
         }

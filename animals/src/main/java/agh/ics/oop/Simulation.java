@@ -5,6 +5,7 @@ import agh.ics.oop.model.Vector2d;
 import agh.ics.oop.model.WorldMap;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Simulation {
@@ -13,7 +14,7 @@ public class Simulation {
     private final WorldMap worldMap;
 
     public List<Animal> getAnimalsList() {
-        return animalsList;
+        return Collections.unmodifiableList(animalsList);
     }
 
     public Simulation(List<Vector2d> positionsList, List<MoveDirection> movesList, WorldMap worldMap){

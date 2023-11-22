@@ -1,9 +1,7 @@
 package agh.ics.oop.model;
 import agh.ics.oop.model.util.MapVisualizer;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class RectangularMap implements WorldMap {
     private final Vector2d lowerLeft;
@@ -14,7 +12,6 @@ public class RectangularMap implements WorldMap {
         lowerLeft = new Vector2d(0,0);
         upperRight = new Vector2d(width - 1,height - 1);
     }
-
     public Vector2d getLowerLeft() {
         return lowerLeft;
     }
@@ -24,12 +21,11 @@ public class RectangularMap implements WorldMap {
     }
 
     public Map<Vector2d, Animal> getAnimals() {
-        return animals;
+        return Collections.unmodifiableMap(animals);
     }
-
     @Override
-    public boolean isOccupied(Vector2d position) {
-        return animals.containsKey(position);
+    public Animal objectAt(Vector2d position) {
+        return animals.get(position);
     }
     @Override
     public boolean canMoveTo(Vector2d position) {
@@ -37,45 +33,18 @@ public class RectangularMap implements WorldMap {
     }
     @Override
     public boolean place(Animal animal) {
-        if(canMoveTo(animal.getPosition()) && animal.getOrientation() == MapDirection.NORTH
-                && !isOccupied(animal.getPosition())){
+        if(canMoveTo(animal.getPosition()) && !isOccupied(animal.getPosition())){
             animals.put(animal.getPosition(),animal);
             return true;
         }
-        else return false;
+        return false;
     }
 
     @Override
     public void move(Animal animal, MoveDirection direction) {
-        if (isOccupied(animal.getPosition())) {
-            if (direction == MoveDirection.LEFT || direction == MoveDirection.RIGHT) {
-                Animal actAnimal = animals.get(animal.getPosition());
-                actAnimal.move(direction, this); //enough with changed position not id, bc we go to left or right
-                animal.move(direction,this);
-            }
-
-            else {
-                final Vector2d oldPosition = animal.getPosition();
-                animal.move(direction, this);
-
-
-                if (canMoveTo(animal.getPosition()) && !isOccupied(animal.getPosition())) {
-                    Animal newAnimal = new Animal(animal.getPosition());
-
-                    while(newAnimal.getOrientation() != animal.getOrientation()){ //O(1)
-                        newAnimal.move(MoveDirection.RIGHT,this);
-                    }
-
-                    animals.remove(oldPosition); //we must delete this bc id have to be changed
-                    animals.put(newAnimal.getPosition(), newAnimal);
-                }
-            }
-        }
-    }
-
-    @Override
-    public Animal objectAt(Vector2d position) {
-        return animals.get(position);
+        animals.remove(animal.getPosition());
+        animal.move(direction,this);
+        animals.put(animal.getPosition(),animal);
     }
 
     @Override

@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SimulationTest {
     @Test
-    void DoesArgumentsOnInputAreCorrectlyInterpreted() { //czy dane wejściowe podane jako tablica znaków są poprawnie interpretowane?
+    void doesArgumentsOnInputAreCorrectlyInterpreted() { //czy dane wejściowe podane jako tablica znaków są poprawnie interpretowane?
         //given
         String[] args = {"666","r","?","r","?","f","?","f","x","l","21","f","2137","f","f","r","f","f","r"};
         List<Vector2d> positions = List.of(new Vector2d(7,1),new Vector2d(8,4));
@@ -27,7 +27,7 @@ class SimulationTest {
     }
 
     @Test
-    void DoesTheAnimalHaveTheRightOrientation() { //czy zwierzę ma właściwą orientację?
+    void doesTheAnimalHaveTheRightOrientation() { //czy zwierzę ma właściwą orientację?
         //given
         String[] args = {"r","r","f","f","l","f","f","f","r","f","f","r"};
         List<MoveDirection> directions = OptionsParser.giveDirections(args);
@@ -48,7 +48,7 @@ class SimulationTest {
         }
     }
     @Test
-    void IsTheAnimalInTheRightPosition() { //czy zwierzę przemieszcza się na właściwe pozycje?
+    void isTheAnimalInTheRightPosition() { //czy zwierzę przemieszcza się na właściwe pozycje?
         //given
         String[] args = {"r","r","f","r","f","f","r","f","f","f"};
         List<Vector2d> positions = List.of(new Vector2d(0,0),new Vector2d(4,4));
@@ -69,7 +69,7 @@ class SimulationTest {
     }
 
     @Test
-    void DoesAnimalNotGoOffTheMap() { //czy zwierzę nie wychodzi poza mapę?
+    void doesAnimalNotGoOffTheMap() { //czy zwierzę nie wychodzi poza mapę?
         //given
         String[] args = {"r","f","r","f","f","f","f"};
         List<Vector2d> positions = List.of(new Vector2d(0,0),new Vector2d(4,4));

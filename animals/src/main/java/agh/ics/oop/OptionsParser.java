@@ -3,7 +3,6 @@ import agh.ics.oop.model.MoveDirection;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Arrays;
 
 public class OptionsParser {
     public static List<MoveDirection> giveDirections(String[] args) {

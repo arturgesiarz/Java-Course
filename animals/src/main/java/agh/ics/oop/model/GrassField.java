@@ -1,4 +1,6 @@
 package agh.ics.oop.model;
+import agh.ics.oop.model.util.MapVisualizer;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,6 +34,13 @@ public class GrassField extends RectangularMap implements WorldMap  {
     public boolean isThereGrass(Grass grass){ //funkcja sprawdza czy w danym miejscu jest postawiona trawa
         return grassSet.contains(grass);
     }
+    private void updateUpperRightAndLeftVectors(Vector2d positionOfAnimal){
+        super.lowerLeft = new Vector2d(Math.min(super.lowerLeft.getX(),positionOfAnimal.getX()),
+                Math.min(super.lowerLeft.getY(),positionOfAnimal.getY()));
+
+        super.upperRight = new Vector2d(Math.max(super.lowerLeft.getX(),positionOfAnimal.getX()),
+                Math.max(super.lowerLeft.getY(),positionOfAnimal.getY()));
+    }
     @Override
     public boolean canMoveTo(Vector2d position) {
         return !isOccupied(position);
@@ -40,17 +49,14 @@ public class GrassField extends RectangularMap implements WorldMap  {
     public boolean place(Animal animal) {
         if(canMoveTo(animal.getPosition())){
             super.animals.put(animal.getPosition(),animal);
+            updateUpperRightAndLeftVectors(animal.getPosition());
             return true;
         }
         return false;
     }
-
     @Override
     public String toString() {
-        return "GrassField{" +
-                "grassNumber=" + grassNumber +
-                ", upperRangeBladeOfGrass=" + upperRangeBladeOfGrass +
-                ", grassSet=" + grassSet +
-                '}';
+        MapVisualizer visualizer = new MapVisualizer(GrassField.this);
+        return visualizer.draw(this.lowerLeft,this.upperRight);
     }
 }

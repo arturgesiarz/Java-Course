@@ -21,13 +21,15 @@ public class Simulation {
         List<Animal> animalsList = new ArrayList<>();
 
         for(Vector2d position : positionsList){
-            animalsList.add(new Animal(position));
-            worldMap.place(new Animal(position));
+            Animal newAnimal = new Animal(position);
+            animalsList.add(newAnimal);
+            worldMap.place(newAnimal);
         }
 
         this.animalsList = animalsList;
         this.movesList = movesList;
         this.worldMap = worldMap;
+        System.out.println(worldMap);
     }
 
     public void run(){

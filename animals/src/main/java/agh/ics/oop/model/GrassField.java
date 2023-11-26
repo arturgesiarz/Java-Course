@@ -3,7 +3,7 @@ import agh.ics.oop.model.util.MapVisualizer;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GrassField extends RectangularMap implements WorldMap  {
+public class GrassField extends AbstractWorldMap  {
     private final int grassNumber;
     private final Vector2d upperRangeBladeOfGrass;
     private final Map<Vector2d, Grass> grassMap = new HashMap<>();
@@ -45,19 +45,16 @@ public class GrassField extends RectangularMap implements WorldMap  {
     }
     @Override
     public boolean place(Animal animal) {
-        boolean result = super.place(animal);
-        updateUpperRightAndLeftVectors(animal.getPosition());
-        return result;
+        if(canMoveTo(animal.getPosition())){
+            animals.put(animal.getPosition(),animal);
+            updateUpperRightAndLeftVectors(animal.getPosition());
+            return true;
+        }
+        return false;
     }
     @Override
     public void move(Animal animal, MoveDirection direction) {
         super.move(animal,direction);
         updateUpperRightAndLeftVectors(animal.getPosition());
-    }
-
-    @Override
-    public String toString() {
-        MapVisualizer visualizerGrass = new MapVisualizer(GrassField.this);
-        return visualizerGrass.draw(this.lowerLeft,this.upperRight);
     }
 }

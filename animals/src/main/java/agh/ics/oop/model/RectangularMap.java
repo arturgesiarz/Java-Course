@@ -5,7 +5,7 @@ import java.util.*;
 public class RectangularMap implements WorldMap {
     protected Vector2d lowerLeft;
     protected Vector2d upperRight;
-    protected final Map<Vector2d, Animal> animals = new HashMap<>();
+    private final Map<Vector2d, Animal> animals = new HashMap<>();
 
     public RectangularMap(int width, int height){
         lowerLeft = new Vector2d(0,0);

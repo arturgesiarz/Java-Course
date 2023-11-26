@@ -8,7 +8,7 @@ public class World {
     public static void main(String[] args){
         List<MoveDirection> directions = OptionsParser.giveDirections(args);
         List<Vector2d> positions = List.of(new Vector2d(1,5), new Vector2d(2,5),new Vector2d(2,10));
-        GrassField map = new GrassField(10);
+        GrassField map = new GrassField(5);
         Simulation simulation = new Simulation(positions, directions, map);
         simulation.run();
     }

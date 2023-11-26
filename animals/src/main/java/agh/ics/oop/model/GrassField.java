@@ -7,9 +7,6 @@ public class GrassField extends RectangularMap implements WorldMap  {
     private final int grassNumber;
     private final Vector2d upperRangeBladeOfGrass;
     private final Map<Vector2d, Grass> grassMap = new HashMap<>();
-    public Map<Vector2d, Grass>  getGrassMap(){
-        return grassMap;
-    }
     public GrassField(int grassNumber){
         super((int)(Math.sqrt(grassNumber * 10)) + 1,(int)(Math.sqrt(grassNumber * 10)) + 1);
         this.grassNumber = grassNumber;
@@ -44,7 +41,7 @@ public class GrassField extends RectangularMap implements WorldMap  {
     }
     @Override
     public boolean canMoveTo(Vector2d position) {
-        return !isOccupied(position);
+        return super.objectAt(position) == null; //sprawdzam czy, na danym polu nie ma zwierzecia ponieaz na trawe moge wejsc a na zwierze juz nie
     }
     @Override
     public boolean place(Animal animal) {

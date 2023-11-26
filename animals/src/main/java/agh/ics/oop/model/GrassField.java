@@ -1,12 +1,10 @@
 package agh.ics.oop.model;
-import agh.ics.oop.model.util.MapVisualizer;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class GrassField extends AbstractWorldMap  {
-    private final Map<Vector2d, Grass> grassMap = new HashMap<>();
+    private final Map<Vector2d, Grass> grassMap;
     private final int grassNumber;
     private final Vector2d upperRangeBladeOfGrass;
 
@@ -14,27 +12,18 @@ public class GrassField extends AbstractWorldMap  {
         super((int)(Math.sqrt(grassNumber * 10)) + 1,(int)(Math.sqrt(grassNumber * 10)) + 1);
         this.grassNumber = grassNumber;
         this.upperRangeBladeOfGrass = new Vector2d((int)(Math.sqrt(grassNumber * 10)), (int)(Math.sqrt(grassNumber * 10)));
-        generateGrass();
+        this.grassMap = generateGrass();
     }
     public Map<Vector2d, Grass> getGrassMap() {
         return Collections.unmodifiableMap(grassMap);
     }
-    private void generateGrass(){ //funkcja generuje cala trawe
-        for(int i = 0; i < grassNumber; i++){
-            generateBladeOfGrass();
+    private Map<Vector2d, Grass> generateGrass(){ //funkcja generuje cala trawe
+        Map<Vector2d, Grass> grassMap = new HashMap<>();
+        RandomPositionGenerator grassGenerator = new RandomPositionGenerator(grassNumber, upperRangeBladeOfGrass);
+        for(Vector2d grassPosition : grassGenerator) {
+            grassMap.put(grassPosition, new Grass(grassPosition));
         }
-    }
-    private void generateBladeOfGrass(){ //funkcja generuje punkt w postaci wektora
-        int randomX = (int)Math.floor(Math.random() * (upperRangeBladeOfGrass.getX() + 1));
-        int randomY = (int)Math.floor(Math.random() * (upperRangeBladeOfGrass.getY() + 1));
-        Grass newGrass = new Grass(new Vector2d(randomX,randomY));
-
-        while(isOccupied(newGrass.getPosition())){ //losuje nowe miejsca na trawe dopki nie zostanie wylosowane prawidlowe miejsce
-            randomX = (int)Math.floor(Math.random() * (upperRangeBladeOfGrass.getX() + 1));
-            randomY = (int)Math.floor(Math.random() * (upperRangeBladeOfGrass.getY() + 1));
-            newGrass = new Grass(new Vector2d(randomX,randomY));
-        }
-        grassMap.put(newGrass.getPosition(),newGrass);
+        return grassMap;
     }
     private void updateUpperRightAndLeftVectors(Vector2d positionOfAnimal){
         super.lowerLeft = super.lowerLeft.lowerLeft(positionOfAnimal);

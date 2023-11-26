@@ -6,9 +6,6 @@ public class RectangularMap extends AbstractWorldMap {
     public RectangularMap(int width, int height) {
         super(width, height);
     }
-    public Map<Vector2d, Animal> getAnimals() {
-        return Collections.unmodifiableMap(animals);
-    }
     @Override
     public boolean canMoveTo(Vector2d position) {
         return upperRight.follows(position) && lowerLeft.precedes(position) && !isOccupied(position);

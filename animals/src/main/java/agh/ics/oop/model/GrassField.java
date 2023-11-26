@@ -1,5 +1,7 @@
 package agh.ics.oop.model;
 import agh.ics.oop.model.util.MapVisualizer;
+
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,6 +15,9 @@ public class GrassField extends AbstractWorldMap  {
         this.grassNumber = grassNumber;
         this.upperRangeBladeOfGrass = new Vector2d((int)(Math.sqrt(grassNumber * 10)), (int)(Math.sqrt(grassNumber * 10)));
         generateGrass();
+    }
+    public Map<Vector2d, Grass> getGrassMap() {
+        return Collections.unmodifiableMap(grassMap);
     }
     private void generateGrass(){ //funkcja generuje cala trawe
         for(int i = 0; i < grassNumber; i++){

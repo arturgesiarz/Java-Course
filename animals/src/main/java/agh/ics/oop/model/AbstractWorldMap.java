@@ -1,5 +1,7 @@
 package agh.ics.oop.model;
 import agh.ics.oop.model.util.MapVisualizer;
+
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,6 +12,9 @@ public abstract class AbstractWorldMap implements WorldMap {
     public AbstractWorldMap(int width, int height){
         lowerLeft = new Vector2d(0,0);
         upperRight = new Vector2d(width - 1,height - 1);
+    }
+    public Map<Vector2d, Animal> getAnimals() {
+        return Collections.unmodifiableMap(animals);
     }
     public abstract boolean canMoveTo(Vector2d position);
     public WorldElement objectAt(Vector2d position){

@@ -16,7 +16,7 @@ public abstract class AbstractWorldMap implements WorldMap {
         return animals.get(position);
     }
     public boolean place(Animal animal){
-        if(canMoveTo(animal.getPosition()) && !isOccupied(animal.getPosition())){
+        if(canMoveTo(animal.getPosition())){
             animals.put(animal.getPosition(),animal);
             return true;
         }
@@ -26,6 +26,13 @@ public abstract class AbstractWorldMap implements WorldMap {
         animals.remove(animal.getPosition());
         animal.move(direction, this);
         animals.put(animal.getPosition(),animal);
+    }
+    public Map<Vector2d, WorldElement> getElements(){
+        Map<Vector2d, WorldElement> mapOfElements = new HashMap<>();
+        for(Vector2d positionAnimal : animals.keySet()){
+            mapOfElements.put(positionAnimal,animals.get(positionAnimal));
+        }
+        return mapOfElements;
     }
     @Override
     public String toString() {

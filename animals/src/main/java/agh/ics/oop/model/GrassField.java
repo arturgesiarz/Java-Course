@@ -4,9 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GrassField extends AbstractWorldMap  {
+    private final Map<Vector2d, Grass> grassMap = new HashMap<>();
     private final int grassNumber;
     private final Vector2d upperRangeBladeOfGrass;
-    private final Map<Vector2d, Grass> grassMap = new HashMap<>();
+
     public GrassField(int grassNumber){
         super((int)(Math.sqrt(grassNumber * 10)) + 1,(int)(Math.sqrt(grassNumber * 10)) + 1);
         this.grassNumber = grassNumber;
@@ -45,16 +46,25 @@ public class GrassField extends AbstractWorldMap  {
     }
     @Override
     public boolean place(Animal animal) {
-        if(canMoveTo(animal.getPosition())){
-            animals.put(animal.getPosition(),animal);
+        boolean doesAddedPositive = super.place(animal);
+        if(doesAddedPositive){
             updateUpperRightAndLeftVectors(animal.getPosition());
-            return true;
         }
-        return false;
+        return doesAddedPositive;
     }
     @Override
     public void move(Animal animal, MoveDirection direction) {
         super.move(animal,direction);
         updateUpperRightAndLeftVectors(animal.getPosition());
+    }
+    @Override
+    public Map<Vector2d, WorldElement> getElements(){
+        Map<Vector2d, WorldElement> mapOfElements = super.getElements();
+        for(Vector2d positionGrass : grassMap.keySet()){
+            if(!mapOfElements.containsKey(positionGrass)){
+                mapOfElements.put(positionGrass,grassMap.get(positionGrass));
+            }
+        }
+        return mapOfElements;
     }
 }

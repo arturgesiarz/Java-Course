@@ -29,7 +29,7 @@ class GrassFieldTest {
     }
 
     @Test
-    void doesMoveMethodWorkCorrectly(){
+    void doMoveAndObjectAtMethodsWorksCorrectly(){
         //given
         List<MoveDirection> directions = List.of(
                 MoveDirection.FORWARD,MoveDirection.FORWARD,MoveDirection.FORWARD,
@@ -53,5 +53,35 @@ class GrassFieldTest {
             assertTrue(animalSolution.containsKey(endPositionOfAnimal));
         }
     }
+
+    @Test
+    void doesIsOccupiedMethodWorkCorrectly(){
+        //given
+        List<MoveDirection> directions = List.of(
+                MoveDirection.RIGHT,MoveDirection.LEFT,
+                MoveDirection.FORWARD, MoveDirection.FORWARD,
+                MoveDirection.FORWARD, MoveDirection.FORWARD,
+                MoveDirection.FORWARD, MoveDirection.FORWARD
+        );
+
+        List<Vector2d> positionsOfAnimals = List.of(
+                new Vector2d(-5,0),new Vector2d(-1,0));
+
+        List<Vector2d> endPositionsOfAnimals = List.of(
+                new Vector2d(-3,0),new Vector2d(-2,0));
+
+        GrassField map = new GrassField(15);
+
+        //when
+        Simulation simulation = new Simulation(positionsOfAnimals, directions, map);
+        simulation.run();
+
+        //then
+        Map<Vector2d, Animal> animalSolution = map.getAnimals();
+        for(Vector2d endPositionOfAnimal : endPositionsOfAnimals){
+            assertTrue(animalSolution.containsKey(endPositionOfAnimal));
+        }
+    }
+
 
 }

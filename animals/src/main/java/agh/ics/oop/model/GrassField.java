@@ -1,15 +1,17 @@
 package agh.ics.oop.model;
 import agh.ics.oop.model.util.MapVisualizer;
-
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GrassField extends RectangularMap implements WorldMap  {
     private final int grassNumber;
     private final Vector2d upperRangeBladeOfGrass;
-    private final Set<Grass> grassSet = new HashSet<>();
+    private final Map<Vector2d, Grass> grassMap = new HashMap<>();
+    public Map<Vector2d, Grass>  getGrassMap(){
+        return grassMap;
+    }
     public GrassField(int grassNumber){
-        super((int)(Math.sqrt(grassNumber * 10)),(int)(Math.sqrt(grassNumber * 10)));
+        super((int)(Math.sqrt(grassNumber * 10)) + 1,(int)(Math.sqrt(grassNumber * 10)) + 1);
         this.grassNumber = grassNumber;
         this.upperRangeBladeOfGrass = new Vector2d((int)(Math.sqrt(grassNumber * 10)), (int)(Math.sqrt(grassNumber * 10)));
         generateGrass();
@@ -22,24 +24,23 @@ public class GrassField extends RectangularMap implements WorldMap  {
     private void generateBladeOfGrass(){ //funkcja generuje punkt w postaci wektora
         int randomX = (int)Math.floor(Math.random() * (upperRangeBladeOfGrass.getX() + 1));
         int randomY = (int)Math.floor(Math.random() * (upperRangeBladeOfGrass.getY() + 1));
-        Grass grassNewPosition = new Grass(new Vector2d(randomX,randomY));
+        Grass newGrass = new Grass(new Vector2d(randomX,randomY));
 
-        while(isThereGrass(grassNewPosition)){ //losuje nowe miejsca na trawe dopki nie zostanie wylosowane prawidlowe miejsce
+        while(isOccupied(newGrass.getPosition())){ //losuje nowe miejsca na trawe dopki nie zostanie wylosowane prawidlowe miejsce
             randomX = (int)Math.floor(Math.random() * (upperRangeBladeOfGrass.getX() + 1));
             randomY = (int)Math.floor(Math.random() * (upperRangeBladeOfGrass.getY() + 1));
-            grassNewPosition = new Grass(new Vector2d(randomX,randomY));
+            newGrass = new Grass(new Vector2d(randomX,randomY));
         }
-        grassSet.add(grassNewPosition);
-    }
-    public boolean isThereGrass(Grass grass){ //funkcja sprawdza czy w danym miejscu jest postawiona trawa
-        return grassSet.contains(grass);
+        grassMap.put(newGrass.getPosition(),newGrass);
     }
     private void updateUpperRightAndLeftVectors(Vector2d positionOfAnimal){
-        super.lowerLeft = new Vector2d(Math.min(super.lowerLeft.getX(),positionOfAnimal.getX()),
-                Math.min(super.lowerLeft.getY(),positionOfAnimal.getY()));
-
-        super.upperRight = new Vector2d(Math.max(super.lowerLeft.getX(),positionOfAnimal.getX()),
-                Math.max(super.lowerLeft.getY(),positionOfAnimal.getY()));
+        super.lowerLeft = super.lowerLeft.lowerLeft(positionOfAnimal);
+        super.upperRight = super.upperRight.upperRight(positionOfAnimal);
+    }
+    @Override
+    public WorldElement objectAt(Vector2d position){
+        WorldElement objectAnimal = super.objectAt(position);
+        return objectAnimal != null ? objectAnimal : grassMap.get(position);
     }
     @Override
     public boolean canMoveTo(Vector2d position) {
@@ -47,16 +48,19 @@ public class GrassField extends RectangularMap implements WorldMap  {
     }
     @Override
     public boolean place(Animal animal) {
-        if(canMoveTo(animal.getPosition())){
-            super.animals.put(animal.getPosition(),animal);
-            updateUpperRightAndLeftVectors(animal.getPosition());
-            return true;
-        }
-        return false;
+        boolean result = super.place(animal);
+        updateUpperRightAndLeftVectors(animal.getPosition());
+        return result;
     }
     @Override
+    public void move(Animal animal, MoveDirection direction) {
+        super.move(animal,direction);
+        updateUpperRightAndLeftVectors(animal.getPosition());
+    }
+
+    @Override
     public String toString() {
-        MapVisualizer visualizer = new MapVisualizer(GrassField.this);
-        return visualizer.draw(this.lowerLeft,this.upperRight);
+        MapVisualizer visualizerGrass = new MapVisualizer(GrassField.this);
+        return visualizerGrass.draw(this.lowerLeft,this.upperRight);
     }
 }

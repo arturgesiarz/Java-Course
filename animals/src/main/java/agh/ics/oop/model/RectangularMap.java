@@ -1,6 +1,5 @@
 package agh.ics.oop.model;
 import agh.ics.oop.model.util.MapVisualizer;
-
 import java.util.*;
 
 public class RectangularMap implements WorldMap {
@@ -24,7 +23,7 @@ public class RectangularMap implements WorldMap {
         return Collections.unmodifiableMap(animals);
     }
     @Override
-    public Animal objectAt(Vector2d position) {
+    public WorldElement objectAt(Vector2d position) {
         return animals.get(position);
     }
     @Override

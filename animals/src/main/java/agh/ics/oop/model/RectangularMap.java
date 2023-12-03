@@ -3,6 +3,7 @@ import agh.ics.oop.model.util.MapVisualizer;
 import java.util.*;
 
 public class RectangularMap extends AbstractWorldMap {
+
     public RectangularMap(int width, int height) {
         super(width, height);
     }

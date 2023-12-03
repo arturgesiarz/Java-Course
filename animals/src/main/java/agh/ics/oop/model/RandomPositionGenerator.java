@@ -2,7 +2,7 @@ package agh.ics.oop.model;
 import java.util.*;
 import java.util.function.Consumer;
 
-public class RandomPositionGenerator implements Iterable<Vector2d>{ //zrobic realizacje iterable!!
+public class RandomPositionGenerator implements Iterable<Vector2d>{
     private final int grassNumber;
     private final Vector2d upperRangeBladeOfGrass;
     private final List<Vector2d> randomPoints;
@@ -41,7 +41,6 @@ public class RandomPositionGenerator implements Iterable<Vector2d>{ //zrobic rea
     public void forEach(Consumer<? super Vector2d> action) {
         Iterable.super.forEach(action);
     }
-
     @Override
     public Spliterator<Vector2d> spliterator() {
         return Iterable.super.spliterator();

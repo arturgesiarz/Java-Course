@@ -1,4 +1,6 @@
 package agh.ics.oop.model;
+
+import agh.ics.oop.model.util.MapVisualizer;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,10 +27,6 @@ public class GrassField extends AbstractWorldMap  {
         }
         return grassMap;
     }
-    private void updateUpperRightAndLeftVectors(Vector2d positionOfAnimal){
-        super.lowerLeft = super.lowerLeft.lowerLeft(positionOfAnimal);
-        super.upperRight = super.upperRight.upperRight(positionOfAnimal);
-    }
     @Override
     public WorldElement objectAt(Vector2d position){
         WorldElement objectAnimal = super.objectAt(position);
@@ -36,20 +34,7 @@ public class GrassField extends AbstractWorldMap  {
     }
     @Override
     public boolean canMoveTo(Vector2d position) {
-        return super.objectAt(position) == null; //sprawdzam czy, na danym polu nie ma zwierzecia ponieaz na trawe moge wejsc a na zwierze juz nie
-    }
-    @Override
-    public boolean place(Animal animal) {
-        boolean doesAddedPositive = super.place(animal);
-        if(doesAddedPositive){
-            updateUpperRightAndLeftVectors(animal.getPosition());
-        }
-        return doesAddedPositive;
-    }
-    @Override
-    public void move(Animal animal, MoveDirection direction) {
-        super.move(animal,direction);
-        updateUpperRightAndLeftVectors(animal.getPosition());
+        return !animals.containsKey(position);
     }
     @Override
     public Map<Vector2d, WorldElement> getElements(){
@@ -60,5 +45,22 @@ public class GrassField extends AbstractWorldMap  {
             }
         }
         return mapOfElements;
+    }
+    @Override
+    public String toString() { //obliczam dynamicznie rozmiar tablicy - kiedy potrzebuje wyliczyc rozmiar tablicy
+        Vector2d lowerLeft = new Vector2d(Integer.MAX_VALUE,Integer.MAX_VALUE);
+        Vector2d upperRight = new Vector2d(Integer.MIN_VALUE, Integer.MIN_VALUE);
+
+        for(Vector2d position : super.animals.keySet()){ //przegladam kolejno zwierzeta
+            lowerLeft = new Vector2d(Math.min(lowerLeft.getX(), position.getX()),Math.min(lowerLeft.getY(), position.getY()));
+            upperRight = new Vector2d(Math.max(upperRight.getX(), position.getX()),Math.max(upperRight.getY(), position.getY()));
+        }
+        for(Vector2d position : grassMap.keySet()){ //przegladam kolejno trawy
+            lowerLeft = new Vector2d(Math.min(lowerLeft.getX(), position.getX()),Math.min(lowerLeft.getY(), position.getY()));
+            upperRight = new Vector2d(Math.max(upperRight.getX(), position.getX()),Math.max(upperRight.getY(), position.getY()));
+        }
+
+        MapVisualizer visualizer = new MapVisualizer(this);
+        return visualizer.draw(lowerLeft,upperRight);
     }
 }

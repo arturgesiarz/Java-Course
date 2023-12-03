@@ -20,12 +20,12 @@ public abstract class AbstractWorldMap implements WorldMap {
     public WorldElement objectAt(Vector2d position){
         return animals.get(position);
     }
-    public boolean place(Animal animal){
+    public boolean place(Animal animal) throws PositionAlreadyOccupiedException{
         if(canMoveTo(animal.getPosition())){
             animals.put(animal.getPosition(),animal);
             return true;
         }
-        return false;
+        throw new PositionAlreadyOccupiedException(animal.getPosition());
     }
     public void move(Animal animal, MoveDirection direction) {
         animals.remove(animal.getPosition());

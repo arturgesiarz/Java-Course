@@ -34,7 +34,7 @@ public abstract class AbstractWorldMap implements WorldMap {
     public boolean place(Animal animal) throws PositionAlreadyOccupiedException{
         if(canMoveTo(animal.getPosition())){
             animals.put(animal.getPosition(),animal);
-            mapChanged("Animal has been placed at " + animal.getPosition());
+            mapChanged("Object has been placed at " + animal.getPosition());
             return true;
         }
         throw new PositionAlreadyOccupiedException(animal.getPosition());
@@ -44,7 +44,7 @@ public abstract class AbstractWorldMap implements WorldMap {
         animals.remove(animal.getPosition());
         animal.move(direction, this);
         animals.put(animal.getPosition(),animal);
-        mapChanged("Animal has been moved from " + animalOldPosition.getPosition() + " to " + animal.getPosition());
+        mapChanged("Object has been moved from " + animalOldPosition.getPosition() + " to " + animal.getPosition());
     }
     public Map<Vector2d, WorldElement> getElements(){
         Map<Vector2d, WorldElement> mapOfElements = new HashMap<>();

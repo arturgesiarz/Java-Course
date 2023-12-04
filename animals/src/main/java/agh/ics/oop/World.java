@@ -16,6 +16,7 @@ public class World {
             e.getStackTrace();
         }
 
+
     }
     private static void run(List<MoveDirection> moves) {
         for (MoveDirection move : moves) {

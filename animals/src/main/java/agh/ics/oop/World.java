@@ -10,6 +10,8 @@ public class World {
             List<MoveDirection> directions = OptionsParser.giveDirections(args);
             List<Vector2d> positions = List.of(new Vector2d(0,2), new Vector2d(0,0),new Vector2d(1,0), new Vector2d(0,0));
             GrassField map = new GrassField(5);
+            ConsoleMapDisplay observerConsolMapDisplay = new ConsoleMapDisplay();
+            map.addObserver(observerConsolMapDisplay);
             Simulation simulation = new Simulation(positions, directions, map);
             simulation.run();
         } catch (IllegalArgumentException e){

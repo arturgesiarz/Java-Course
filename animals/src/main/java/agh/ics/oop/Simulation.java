@@ -38,8 +38,6 @@ public class Simulation {
 
             Animal animalActual = animalsList.get(pointerToAnimal % animalsList.size());
             worldMap.move(animalActual,moveAnimal);
-            System.out.println("Zwierzę " + ( pointerToAnimal % animalsList.size() ) + " : " + animalActual.getPosition());
-            System.out.println(worldMap);
             pointerToAnimal += 1;
         }
     }

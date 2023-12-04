@@ -39,12 +39,29 @@ public abstract class AbstractWorldMap implements WorldMap {
         }
         throw new PositionAlreadyOccupiedException(animal.getPosition());
     }
+    boolean checkIfItWasTurn(MapDirection oldOrientation, MapDirection newOrientation){
+        return !oldOrientation.equals(newOrientation);
+    }
     public void move(Animal animal, MoveDirection direction) {
-        Animal animalOldPosition = new Animal(animal.getPosition()); //potrzebuje zapisac stara lokalizacje
+        Vector2d oldPosition = new Vector2d(animal.getPosition().getX(),animal.getPosition().getY());
+        MapDirection oldOrientation = animal.getOrientation();
+
         animals.remove(animal.getPosition());
         animal.move(direction, this);
         animals.put(animal.getPosition(),animal);
-        mapChanged("Object has been moved from " + animalOldPosition.getPosition() + " to " + animal.getPosition());
+
+        if(checkIfItWasTurn(oldOrientation,animal.getOrientation())){ //rotacja
+            mapChanged("Object in position " + animal.getPosition() +
+                    " rotated from " + oldOrientation + " to " + animal.getOrientation());
+        }
+        else if(oldPosition.equals(animal.getPosition())){ //niemozliwosc poruszenia sie na dane pole
+            mapChanged("Object in position " + animal.getPosition() + " stuck!");
+        }
+        else{ //przemieszczenie sie obiektu
+            mapChanged("Object in position " + oldPosition +
+                    " moved to " + animal.getPosition());
+        }
+
     }
     public Map<Vector2d, WorldElement> getElements(){
         Map<Vector2d, WorldElement> mapOfElements = new HashMap<>();

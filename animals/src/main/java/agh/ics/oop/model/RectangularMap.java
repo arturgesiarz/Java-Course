@@ -12,6 +12,10 @@ public class RectangularMap extends AbstractWorldMap {
         return upperRight.follows(position) && lowerLeft.precedes(position) && !isOccupied(position);
     }
     @Override
+    public Boundary getCurrentBounds(){
+        return new Boundary(lowerLeft,upperRight);
+    }
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

@@ -47,7 +47,7 @@ public class GrassField extends AbstractWorldMap  {
         return mapOfElements;
     }
     @Override
-    public String toString() { //obliczam dynamicznie rozmiar tablicy - kiedy potrzebuje wyliczyc rozmiar tablicy
+    public Boundary getCurrentBounds(){
         Vector2d lowerLeft = new Vector2d(Integer.MAX_VALUE,Integer.MAX_VALUE);
         Vector2d upperRight = new Vector2d(Integer.MIN_VALUE, Integer.MIN_VALUE);
 
@@ -59,8 +59,6 @@ public class GrassField extends AbstractWorldMap  {
             lowerLeft = new Vector2d(Math.min(lowerLeft.getX(), position.getX()),Math.min(lowerLeft.getY(), position.getY()));
             upperRight = new Vector2d(Math.max(upperRight.getX(), position.getX()),Math.max(upperRight.getY(), position.getY()));
         }
-
-        MapVisualizer visualizer = new MapVisualizer(this);
-        return visualizer.draw(lowerLeft,upperRight);
+        return new Boundary(lowerLeft,upperRight);
     }
 }

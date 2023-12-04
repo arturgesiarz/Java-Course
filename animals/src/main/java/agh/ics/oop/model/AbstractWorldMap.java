@@ -17,6 +17,7 @@ public abstract class AbstractWorldMap implements WorldMap {
         return Collections.unmodifiableMap(animals);
     }
     public abstract boolean canMoveTo(Vector2d position);
+    public abstract Boundary getCurrentBounds();
     public WorldElement objectAt(Vector2d position){
         return animals.get(position);
     }
@@ -42,6 +43,7 @@ public abstract class AbstractWorldMap implements WorldMap {
     @Override
     public String toString() {
         MapVisualizer visualizer = new MapVisualizer(this);
-        return visualizer.draw(this.lowerLeft,this.upperRight);
+        Boundary boundary = getCurrentBounds();
+        return visualizer.draw(boundary.lowerLeftBoundary(),boundary.upperRightBoundary());
     }
 }

@@ -22,7 +22,6 @@ public abstract class AbstractWorldMap implements WorldMap {
             observer.mapChanged(this,message);
         }
     }
-
     public Map<Vector2d, Animal> getAnimals() {
         return Collections.unmodifiableMap(animals);
     }
@@ -61,7 +60,6 @@ public abstract class AbstractWorldMap implements WorldMap {
             mapChanged("Object in position " + oldPosition +
                     " moved to " + animal.getPosition());
         }
-
     }
     public Map<Vector2d, WorldElement> getElements(){
         Map<Vector2d, WorldElement> mapOfElements = new HashMap<>();

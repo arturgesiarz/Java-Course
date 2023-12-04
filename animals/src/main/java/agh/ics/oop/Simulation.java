@@ -35,7 +35,6 @@ public class Simulation {
     public void run(){
         int pointerToAnimal = 0;
         for(MoveDirection moveAnimal : movesList){
-
             Animal animalActual = animalsList.get(pointerToAnimal % animalsList.size());
             worldMap.move(animalActual,moveAnimal);
             pointerToAnimal += 1;

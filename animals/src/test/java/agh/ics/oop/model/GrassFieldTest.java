@@ -13,7 +13,7 @@ class GrassFieldTest {
         List<MoveDirection> directions = List.of(
                 MoveDirection.RIGHT,MoveDirection.RIGHT,MoveDirection.LEFT,MoveDirection.RIGHT, MoveDirection.RIGHT);
         List<Vector2d> positionsOfAnimals = List.of(
-                new Vector2d(7,1),new Vector2d(8,4));
+                new Vector2d(7,1),new Vector2d(8,4), new Vector2d(8,4));
         GrassField map = new GrassField(5);
 
         //when
@@ -36,7 +36,7 @@ class GrassFieldTest {
                 MoveDirection.FORWARD, MoveDirection.FORWARD, MoveDirection.BACKWARD);
 
         List<Vector2d> positionsOfAnimals = List.of(
-                new Vector2d(1,10),new Vector2d(0,0), new Vector2d(-1,-4));
+                new Vector2d(1,10),new Vector2d(0,0),new Vector2d(0,0), new Vector2d(-1,-4));
 
         List<Vector2d> endPositionsOfAnimals = List.of(
                 new Vector2d(1,12),new Vector2d(0,2), new Vector2d(-1,-4));
@@ -65,7 +65,7 @@ class GrassFieldTest {
         );
 
         List<Vector2d> positionsOfAnimals = List.of(
-                new Vector2d(-5,0),new Vector2d(-1,0));
+                new Vector2d(-5,0),new Vector2d(-1,0),new Vector2d(-1,0),new Vector2d(-1,0));
 
         List<Vector2d> endPositionsOfAnimals = List.of(
                 new Vector2d(-3,0),new Vector2d(-2,0));

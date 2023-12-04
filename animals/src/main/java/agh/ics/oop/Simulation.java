@@ -19,9 +19,9 @@ public class Simulation {
 
         for(Vector2d position : positionsList){
             Animal newAnimal = new Animal(position);
-            animalsList.add(newAnimal);
             try{
                 worldMap.place(newAnimal);
+                animalsList.add(newAnimal);
             } catch (PositionAlreadyOccupiedException e){
                 e.getStackTrace();
             }

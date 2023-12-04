@@ -15,7 +15,7 @@ class RectangularMapTest {
         List<MoveDirection> directions = List.of(
                 MoveDirection.RIGHT,MoveDirection.RIGHT,MoveDirection.LEFT,MoveDirection.RIGHT, MoveDirection.RIGHT);
         List<Vector2d> positionsOfAnimals = List.of(
-                new Vector2d(7,1),new Vector2d(8,4));
+                new Vector2d(7,1),new Vector2d(8,4),new Vector2d(7,1),new Vector2d(7,1));
         RectangularMap map = new RectangularMap(9,9);
 
         //when

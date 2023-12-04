@@ -6,6 +6,7 @@ plugins {
 
 application {
     getMainClass().set('agh.ics.oop.World')
+
 }
 
 java {

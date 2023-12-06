@@ -18,9 +18,8 @@ public class World {
             simulation.run();
 
         } catch (IllegalArgumentException e){
-            e.getStackTrace();
+            e.printStackTrace();
         }
-
     }
     private static void run(List<MoveDirection> moves) {
         for (MoveDirection move : moves) {

@@ -50,15 +50,13 @@ public class GrassField extends AbstractWorldMap  {
     public Boundary getCurrentBounds(){
         Vector2d lowerLeft = new Vector2d(Integer.MAX_VALUE,Integer.MAX_VALUE);
         Vector2d upperRight = new Vector2d(Integer.MIN_VALUE, Integer.MIN_VALUE);
+        Map<Vector2d, WorldElement> allObjects = getElements();
 
-        for(Vector2d position : super.animals.keySet()){ //przegladam kolejno zwierzeta
-            lowerLeft = new Vector2d(Math.min(lowerLeft.getX(), position.getX()),Math.min(lowerLeft.getY(), position.getY()));
-            upperRight = new Vector2d(Math.max(upperRight.getX(), position.getX()),Math.max(upperRight.getY(), position.getY()));
+        for(Vector2d positionObject : allObjects.keySet()){
+            lowerLeft = new Vector2d(Math.min(lowerLeft.getX(), positionObject.getX()),Math.min(lowerLeft.getY(), positionObject.getY()));
+            upperRight = new Vector2d(Math.max(upperRight.getX(), positionObject.getX()),Math.max(upperRight.getY(), positionObject.getY()));
         }
-        for(Vector2d position : grassMap.keySet()){ //przegladam kolejno trawy
-            lowerLeft = new Vector2d(Math.min(lowerLeft.getX(), position.getX()),Math.min(lowerLeft.getY(), position.getY()));
-            upperRight = new Vector2d(Math.max(upperRight.getX(), position.getX()),Math.max(upperRight.getY(), position.getY()));
-        }
+
         return new Boundary(lowerLeft,upperRight);
     }
 }

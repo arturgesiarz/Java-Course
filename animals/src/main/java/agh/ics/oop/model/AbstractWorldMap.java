@@ -1,6 +1,7 @@
 package agh.ics.oop.model;
 import agh.ics.oop.model.util.MapVisualizer;
 import java.util.*;
+import java.util.function.Consumer;
 
 public abstract class AbstractWorldMap implements WorldMap {
     protected final Map<Vector2d, Animal> animals = new HashMap<>();
@@ -18,9 +19,7 @@ public abstract class AbstractWorldMap implements WorldMap {
         observers.remove(observer);
     }
     void mapChanged(String message){
-        for(MapChangeListener observer : observers){ //wywoluje na wszystkich obserwatorach metode
-            observer.mapChanged(this,message);
-        }
+        observers.forEach((observer) -> observer.mapChanged(this,message));
     }
     public Map<Vector2d, Animal> getAnimals() {
         return Collections.unmodifiableMap(animals);
@@ -30,16 +29,18 @@ public abstract class AbstractWorldMap implements WorldMap {
     public WorldElement objectAt(Vector2d position){
         return animals.get(position);
     }
-    public boolean place(Animal animal) throws PositionAlreadyOccupiedException{
+    public void place(Animal animal) throws PositionAlreadyOccupiedException{
         if(canMoveTo(animal.getPosition())){
             animals.put(animal.getPosition(),animal);
             mapChanged("Object has been placed at " + animal.getPosition());
-            return true;
         }
-        throw new PositionAlreadyOccupiedException(animal.getPosition());
+        else{
+            throw new PositionAlreadyOccupiedException(animal.getPosition());
+        }
+
     }
-    boolean checkIfItWasTurn(MapDirection oldOrientation, MapDirection newOrientation){
-        return !oldOrientation.equals(newOrientation);
+    private boolean checkIfItWasTurn(MapDirection oldOrientation, MapDirection newOrientation){
+        return oldOrientation != newOrientation; //porownujemy ze soba normalnie poniewaz sa to enumy
     }
     public void move(Animal animal, MoveDirection direction) {
         Vector2d oldPosition = new Vector2d(animal.getPosition().getX(),animal.getPosition().getY());

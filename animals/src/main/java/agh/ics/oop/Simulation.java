@@ -23,10 +23,9 @@ public class Simulation {
                 worldMap.place(newAnimal);
                 animalsList.add(newAnimal);
             } catch (PositionAlreadyOccupiedException e){
-                e.getStackTrace();
+                e.printStackTrace();
             }
         }
-
         this.animalsList = animalsList;
         this.movesList = movesList;
         this.worldMap = worldMap;

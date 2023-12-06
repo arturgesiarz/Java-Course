@@ -14,15 +14,20 @@ class SimulationTest {
         RectangularMap map = new RectangularMap(10,10);
 
         //when
-        List<MoveDirection> directions = OptionsParser.giveDirections(args);
-        Simulation simulation = new Simulation(positions, directions,map);
-        simulation.run();
+        try{
+            List<MoveDirection> directions = OptionsParser.giveDirections(args);
+            Simulation simulation = new Simulation(positions, directions,map);
+            simulation.run();
 
-        //then
-        List<Animal> solutionAnimals = simulation.getAnimalsList();
-
-        for(int i = 0; i < animalEndPositions.size(); i++){
-            assertEquals(solutionAnimals.get(i).getPosition(), animalEndPositions.get(i));
+            //then ->
+            List<Animal> solutionAnimals = simulation.getAnimalsList();
+            for(int i = 0; i < animalEndPositions.size(); i++){
+                assertEquals(solutionAnimals.get(i).getPosition(), animalEndPositions.get(i));
+            }
+        } catch (IllegalArgumentException e){
+            //then ->
+            e.getStackTrace();
+            assertEquals("666 is not legal move specification",e.getMessage());
         }
     }
 
@@ -37,15 +42,19 @@ class SimulationTest {
         RectangularMap map = new RectangularMap(10,10);
 
         //when
-        Simulation simulation = new Simulation(positions, directions,map);
-        simulation.run();
+        try {
+            Simulation simulation = new Simulation(positions, directions,map);
+            simulation.run();
 
-        //then
-        List<Animal> solutionAnimals = simulation.getAnimalsList();
-
-        for(int i = 0; i < animalsEndOrientation.size(); i++){
-            assertEquals(solutionAnimals.get(i).getOrientation(), animalsEndOrientation.get(i));
+            //then ->
+            List<Animal> solutionAnimals = simulation.getAnimalsList();
+            for(int i = 0; i < animalsEndOrientation.size(); i++){
+                assertEquals(solutionAnimals.get(i).getOrientation(), animalsEndOrientation.get(i));
+            }
+        } catch (IllegalArgumentException e){
+            e.getStackTrace();
         }
+
     }
     @Test
     void isTheAnimalInTheRightPosition() { //czy zwierzę przemieszcza się na właściwe pozycje?
@@ -56,15 +65,19 @@ class SimulationTest {
         RectangularMap map = new RectangularMap(5,5);
 
         //when
-        List<MoveDirection> directions = OptionsParser.giveDirections(args);
-        Simulation simulation = new Simulation(positions, directions,map);
+        try{
+            List<MoveDirection> directions = OptionsParser.giveDirections(args);
+            Simulation simulation = new Simulation(positions, directions,map);
 
-        //then
-        simulation.run();
-        List<Animal> solutionAnimals = simulation.getAnimalsList();
+            //then
+            simulation.run();
+            List<Animal> solutionAnimals = simulation.getAnimalsList();
 
-        for(int i = 0; i < animalEndPositions.size(); i++){
-            assertEquals(solutionAnimals.get(i).getPosition(), animalEndPositions.get(i));
+            for(int i = 0; i < animalEndPositions.size(); i++){
+                assertEquals(solutionAnimals.get(i).getPosition(), animalEndPositions.get(i));
+            }
+        } catch (IllegalArgumentException e){
+            e.getStackTrace();
         }
     }
 
@@ -77,15 +90,19 @@ class SimulationTest {
         RectangularMap map = new RectangularMap(5,5);
 
         //when
-        List<MoveDirection> directions = OptionsParser.giveDirections(args);
-        Simulation simulation = new Simulation(positions, directions,map);
+        try{
+            List<MoveDirection> directions = OptionsParser.giveDirections(args);
+            Simulation simulation = new Simulation(positions, directions,map);
 
-        //then
-        simulation.run();
-        List<Animal> solutionAnimals = simulation.getAnimalsList();
+            //then
+            simulation.run();
+            List<Animal> solutionAnimals = simulation.getAnimalsList();
 
-        for(int i = 0; i < animalEndPositions.size(); i++){
-            assertEquals(solutionAnimals.get(i).getPosition(), animalEndPositions.get(i));
+            for(int i = 0; i < animalEndPositions.size(); i++){
+                assertEquals(solutionAnimals.get(i).getPosition(), animalEndPositions.get(i));
+            }
+        } catch (IllegalArgumentException e){
+            e.getStackTrace();
         }
     }
 

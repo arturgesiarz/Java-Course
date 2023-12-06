@@ -6,11 +6,20 @@ import java.util.*;
 
 public class World {
     public static void main(String[] args){
-        List<MoveDirection> directions = OptionsParser.giveDirections(args);
-        List<Vector2d> positions = List.of(new Vector2d(0,2), new Vector2d(0,0),new Vector2d(1,0));
-        GrassField map = new GrassField(5);
-        Simulation simulation = new Simulation(positions, directions, map);
-        simulation.run();
+        try{
+            List<MoveDirection> directions = OptionsParser.giveDirections(args);
+            List<Vector2d> positions = List.of(new Vector2d(0,2), new Vector2d(0,0),new Vector2d(1,0), new Vector2d(0,0));
+
+            GrassField map = new GrassField(5);
+            ConsoleMapDisplay observerConsoleMapDisplay = new ConsoleMapDisplay();
+            map.addObserver(observerConsoleMapDisplay);
+
+            Simulation simulation = new Simulation(positions, directions, map);
+            simulation.run();
+
+        } catch (IllegalArgumentException e){
+            e.printStackTrace();
+        }
     }
     private static void run(List<MoveDirection> moves) {
         for (MoveDirection move : moves) {

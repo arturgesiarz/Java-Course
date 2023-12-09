@@ -10,23 +10,23 @@ public class World {
             List<MoveDirection> directions = OptionsParser.giveDirections(args);
             List<Vector2d> positions = List.of(new Vector2d(0,2), new Vector2d(0,0),new Vector2d(1,0), new Vector2d(0,0));
 
-            GrassField mapGrassField = new GrassField(5);
-            RectangularMap mapRectangular = new RectangularMap(5,5);
-
-            Simulation simulationGrassField = new Simulation(positions, directions, mapGrassField );
-            Simulation simulationRectangularMap = new Simulation(positions,directions,mapRectangular);
-
+            List<Simulation> simulationList = new ArrayList<>();
 
             ConsoleMapDisplay observerConsoleMapDisplay = new ConsoleMapDisplay();
-            mapGrassField.addObserver(observerConsoleMapDisplay); //dodaje obserwatorów, dla konkretnych map
-            mapRectangular.addObserver(observerConsoleMapDisplay);
 
-            SimulationEngine simulationEngine = new SimulationEngine(List.of(simulationGrassField, simulationRectangularMap));
+            for(int i = 0; i < 10; i++){
+                GrassField newMapGrassField = new GrassField(5);
+                simulationList.add(new Simulation(positions,directions,newMapGrassField));
+                newMapGrassField.addObserver(observerConsoleMapDisplay);
+            }
+            SimulationEngine simulationEngine = new SimulationEngine(simulationList);
             simulationEngine.runAsync();
 
         } catch (IllegalArgumentException e){
             e.printStackTrace();
         }
+
+        System.out.println("System zakonczyl dzialanie!");
 
     }
     private static void run(List<MoveDirection> moves) {

@@ -20,7 +20,7 @@ public abstract class AbstractWorldMap implements WorldMap {
     public void removeObserver(MapChangeListener observer) { //usuwam obserwatora
         observers.remove(observer);
     }
-    void mapChanged(String message){
+    synchronized void mapChanged(String message){
         observers.forEach((observer) -> observer.mapChanged(this,message));
     }
     public Map<Vector2d, Animal> getAnimals() {
@@ -45,12 +45,11 @@ public abstract class AbstractWorldMap implements WorldMap {
         else{
             throw new PositionAlreadyOccupiedException(animal.getPosition());
         }
-
     }
     private boolean checkIfItWasTurn(MapDirection oldOrientation, MapDirection newOrientation){
         return oldOrientation != newOrientation; //porownujemy ze soba normalnie poniewaz sa to enumy
     }
-    public void move(Animal animal, MoveDirection direction) {
+    public void move(Animal animal, MoveDirection direction) { //nie dodaje tutaj synchronized, bo kazda symulacja dziala niezalezenie od innych symulacji i nie zmienniaja w tym samym czasie tych samych danych (jakby byla taka mozliwosc koniecznie by bylo uzycie synchronized!)
         Vector2d oldPosition = new Vector2d(animal.getPosition().getX(),animal.getPosition().getY());
         MapDirection oldOrientation = animal.getOrientation();
 

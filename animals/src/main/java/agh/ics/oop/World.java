@@ -22,7 +22,7 @@ public class World {
             mapRectangular.addObserver(observerConsoleMapDisplay);
 
             SimulationEngine simulationEngine = new SimulationEngine(List.of(simulationGrassField, simulationRectangularMap));
-            simulationEngine.runSync();
+            simulationEngine.runAsync();
 
         } catch (IllegalArgumentException e){
             e.printStackTrace();

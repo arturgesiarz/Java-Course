@@ -2,6 +2,8 @@ package agh.ics.oop.model;
 import agh.ics.oop.model.MoveDirection;
 import agh.ics.oop.model.Vector2d;
 
+import java.util.UUID;
+
 /**
  * The interface responsible for interacting with the map of the world.
  * Assumes that Vector2d and MoveDirection classes are defined.
@@ -43,4 +45,5 @@ public interface WorldMap extends MoveValidator {
      */
     WorldElement objectAt(Vector2d position);
     Boundary getCurrentBounds();
+    UUID getId();
 }

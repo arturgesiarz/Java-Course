@@ -8,9 +8,11 @@ public abstract class AbstractWorldMap implements WorldMap {
     private final List<MapChangeListener> observers = new ArrayList<>(); //lista obserwatorow realizujacych interfejs MapChangeListener
     protected Vector2d lowerLeft;
     protected Vector2d upperRight;
+    private final UUID worldMapID;
     public AbstractWorldMap(int width, int height){
         lowerLeft = new Vector2d(0,0);
         upperRight = new Vector2d(width - 1,height - 1);
+        worldMapID = UUID.randomUUID(); // przy tworzeniu nowego objektu, tworze dla niego niepotwarzalny ID
     }
     public void addObserver(MapChangeListener observer) { //dodaje obserwatora
         observers.add(observer);
@@ -26,6 +28,12 @@ public abstract class AbstractWorldMap implements WorldMap {
     }
     public abstract boolean canMoveTo(Vector2d position);
     public abstract Boundary getCurrentBounds();
+
+    @Override
+    public UUID getId() { //wyswietlam moje ID
+        return worldMapID;
+    }
+
     public WorldElement objectAt(Vector2d position){
         return animals.get(position);
     }

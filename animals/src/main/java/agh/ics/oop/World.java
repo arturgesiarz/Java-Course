@@ -10,16 +10,24 @@ public class World {
             List<MoveDirection> directions = OptionsParser.giveDirections(args);
             List<Vector2d> positions = List.of(new Vector2d(0,2), new Vector2d(0,0),new Vector2d(1,0), new Vector2d(0,0));
 
-            GrassField map = new GrassField(5);
-            ConsoleMapDisplay observerConsoleMapDisplay = new ConsoleMapDisplay();
-            map.addObserver(observerConsoleMapDisplay);
+            GrassField mapGrassField = new GrassField(5);
+            RectangularMap mapRectangular = new RectangularMap(5,5);
 
-            Simulation simulation = new Simulation(positions, directions, map);
-            simulation.run();
+            Simulation simulationGrassField = new Simulation(positions, directions, mapGrassField );
+            Simulation simulationRectangularMap = new Simulation(positions,directions,mapRectangular);
+
+
+            ConsoleMapDisplay observerConsoleMapDisplay = new ConsoleMapDisplay();
+            mapGrassField.addObserver(observerConsoleMapDisplay); //dodaje obserwatorów, dla konkretnych map
+            mapRectangular.addObserver(observerConsoleMapDisplay);
+
+            SimulationEngine simulationEngine = new SimulationEngine(List.of(simulationGrassField, simulationRectangularMap));
+            simulationEngine.runSync();
 
         } catch (IllegalArgumentException e){
             e.printStackTrace();
         }
+
     }
     private static void run(List<MoveDirection> moves) {
         for (MoveDirection move : moves) {

@@ -14,13 +14,14 @@ public class World {
 
             ConsoleMapDisplay observerConsoleMapDisplay = new ConsoleMapDisplay();
 
-            for(int i = 0; i < 10; i++){
-                GrassField newMapGrassField = new GrassField(5);
+            for(int i = 420; i < 2137; i++){
+                GrassField newMapGrassField = new GrassField(i);
                 simulationList.add(new Simulation(positions,directions,newMapGrassField));
                 newMapGrassField.addObserver(observerConsoleMapDisplay);
             }
             SimulationEngine simulationEngine = new SimulationEngine(simulationList);
-            simulationEngine.runAsync();
+            simulationEngine.runAsyncInThreadPool();
+            simulationEngine.awaitSimulationsEnd();
 
         } catch (IllegalArgumentException e){
             e.printStackTrace();

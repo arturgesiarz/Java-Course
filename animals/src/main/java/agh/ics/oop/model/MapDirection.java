@@ -1,7 +1,7 @@
 package agh.ics.oop.model;
 
 public enum MapDirection {
-    NORTH ,
+    NORTH,
     SOUTH,
     WEST,
     EAST;

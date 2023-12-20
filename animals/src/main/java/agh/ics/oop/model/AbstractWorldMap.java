@@ -20,7 +20,7 @@ public abstract class AbstractWorldMap implements WorldMap {
     public void removeObserver(MapChangeListener observer) { //usuwam obserwatora
         observers.remove(observer);
     }
-    synchronized void mapChanged(String message){
+    void mapChanged(String message){
         observers.forEach((observer) -> observer.mapChanged(this,message));
     }
     public Map<Vector2d, Animal> getAnimals() {

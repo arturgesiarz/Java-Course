@@ -14,7 +14,7 @@ public class World {
 
             ConsoleMapDisplay observerConsoleMapDisplay = new ConsoleMapDisplay();
 
-            for(int i = 420; i < 2137; i++){
+            for(int i = 1; i < 500; i++){
                 GrassField newMapGrassField = new GrassField(i);
                 simulationList.add(new Simulation(positions,directions,newMapGrassField));
                 newMapGrassField.addObserver(observerConsoleMapDisplay);

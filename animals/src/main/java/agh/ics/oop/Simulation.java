@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Simulation {
+public class Simulation implements Runnable {
     private final List<Animal> animalsList;
     private final List<MoveDirection> movesList;
     private final WorldMap worldMap;
@@ -30,7 +30,7 @@ public class Simulation {
         this.movesList = movesList;
         this.worldMap = worldMap;
     }
-
+    @Override
     public void run(){
         int pointerToAnimal = 0;
         for(MoveDirection moveAnimal : movesList){

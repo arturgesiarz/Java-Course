@@ -8,9 +8,11 @@ public abstract class AbstractWorldMap implements WorldMap {
     private final List<MapChangeListener> observers = new ArrayList<>(); //lista obserwatorow realizujacych interfejs MapChangeListener
     protected Vector2d lowerLeft;
     protected Vector2d upperRight;
+    private final UUID worldMapID;
     public AbstractWorldMap(int width, int height){
         lowerLeft = new Vector2d(0,0);
         upperRight = new Vector2d(width - 1,height - 1);
+        worldMapID = UUID.randomUUID(); // przy tworzeniu nowego objektu, tworze dla niego niepotwarzalny ID
     }
     public void addObserver(MapChangeListener observer) { //dodaje obserwatora
         observers.add(observer);
@@ -26,6 +28,12 @@ public abstract class AbstractWorldMap implements WorldMap {
     }
     public abstract boolean canMoveTo(Vector2d position);
     public abstract Boundary getCurrentBounds();
+
+    @Override
+    public UUID getId() { //wyswietlam moje ID
+        return worldMapID;
+    }
+
     public WorldElement objectAt(Vector2d position){
         return animals.get(position);
     }
@@ -37,12 +45,11 @@ public abstract class AbstractWorldMap implements WorldMap {
         else{
             throw new PositionAlreadyOccupiedException(animal.getPosition());
         }
-
     }
     private boolean checkIfItWasTurn(MapDirection oldOrientation, MapDirection newOrientation){
         return oldOrientation != newOrientation; //porownujemy ze soba normalnie poniewaz sa to enumy
     }
-    public void move(Animal animal, MoveDirection direction) {
+    public void move(Animal animal, MoveDirection direction) { //nie dodaje tutaj synchronized, bo kazda symulacja dziala niezalezenie od innych symulacji i nie zmienniaja w tym samym czasie tych samych danych (jakby byla taka mozliwosc koniecznie by bylo uzycie synchronized!)
         Vector2d oldPosition = new Vector2d(animal.getPosition().getX(),animal.getPosition().getY());
         MapDirection oldOrientation = animal.getOrientation();
 

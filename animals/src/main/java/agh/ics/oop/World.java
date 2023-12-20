@@ -1,6 +1,8 @@
 package agh.ics.oop;
 import agh.ics.oop.model.*;
 import agh.ics.oop.model.util.MapVisualizer;
+import javafx.application.Application;
+
 
 import java.util.*;
 

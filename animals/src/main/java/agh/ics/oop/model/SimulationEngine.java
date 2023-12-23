@@ -27,6 +27,7 @@ public class SimulationEngine{
             executorService.awaitTermination(10, TimeUnit.SECONDS); //oczekujemy maksymlanie 10 sekund na jej zakonczenie
         } catch (InterruptedException e){
             e.printStackTrace();
+            executorService.shutdownNow();
         }
     }
     public void runSync(){

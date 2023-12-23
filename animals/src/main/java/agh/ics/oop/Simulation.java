@@ -1,6 +1,5 @@
 package agh.ics.oop;
 import agh.ics.oop.model.*;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -22,7 +21,8 @@ public class Simulation implements Runnable {
             try{
                 worldMap.place(newAnimal);
                 animalsList.add(newAnimal);
-            } catch (PositionAlreadyOccupiedException e){
+                Thread.sleep(500);
+            } catch (PositionAlreadyOccupiedException | InterruptedException e){
                 e.printStackTrace();
             }
         }
@@ -35,7 +35,12 @@ public class Simulation implements Runnable {
         int pointerToAnimal = 0;
         for(MoveDirection moveAnimal : movesList){
             Animal animalActual = animalsList.get(pointerToAnimal % animalsList.size());
-            worldMap.move(animalActual,moveAnimal);
+            try{
+                worldMap.move(animalActual,moveAnimal);
+                Thread.sleep(500);
+            } catch (InterruptedException e){
+                e.printStackTrace();
+            }
             pointerToAnimal += 1;
         }
     }

@@ -16,8 +16,8 @@
             <Label fx:id="infoLabel" text="All animals will be living here!" textAlignment="CENTER"/>
             <HBox alignment="CENTER">
                 <TextField fx:id="argumentsField" promptText="Input your args!"/>
-                <Button text="Start" onAction="#startSimulation"/>
-                <Button text="Stop" onAction="#stopSimulation"/>
+                <Button text="Start" onAction="#onSimulationStartClicked"/>
+                <Button text="Stop" onAction="#onSimulationStopClicked"/>
             </HBox>
             <Label fx:id="actualMove" text="The current movement of your pet will appear here when you run your simulation!"/>
         </VBox>

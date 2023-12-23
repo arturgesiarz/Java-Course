@@ -2,24 +2,34 @@ package agh.ics.oop.presenter;
 
 import agh.ics.oop.model.MapChangeListener;
 import agh.ics.oop.model.WorldMap;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
-import java.util.Objects;
-
-public class SimulationPresenter implements MapChangeListener { //bede uzywal tej klasy jako obserwatora
+public class SimulationPresenter implements MapChangeListener {
     @FXML
-    private Label infoLabel; //narazie nie potrzebne
+    private TextField argumentsField; //pobrana lista argumentow wpisana przez naszego uzytkownika
+    @FXML
+    private Label actualMove; //aktualny ruch
+    @FXML
+    private Label infoLabel;
     private WorldMap map;
     public void setWorldMap(WorldMap map){
         this.map = map;
     }
     private void drawMap(String message){
-        infoLabel.setText(message);
+        actualMove.setText(message);
     }
     @Override
     public void mapChanged(WorldMap worldMap, String message){
         drawMap(message);
 
+    }
+    @FXML
+    public void startSimulation(ActionEvent actionEvent) {
+    }
+    @FXML
+    public void stopSimulation(ActionEvent actionEvent) {
     }
 }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            minHeight="550.0" minWidth="850.0"
+            fx:controller="agh.ics.oop.presenter.SimulationPresenter">
+    <center>
+        <VBox alignment="CENTER" spacing="10.0">
+            <Label fx:id="infoLabel" text="This is parallel simulation! Have a fun :)" textAlignment="CENTER"/>
+            <HBox alignment="CENTER" spacing="5.0">
+                <TextField fx:id="argumentsField" promptText="Input your args!"/>
+                <Button text="Start" onAction="#onSimulationStartClicked"/>
+                <Button text="Stop" onAction="#onSimulationStopClicked"/>
+            </HBox>
+            <GridPane fx:id="mapGrid" alignment="CENTER" gridLinesVisible="true"/>
+            <Label fx:id="actualMove" text="The current movement of your pet will appear here when you run your simulation!"/>
+        </VBox>
+    </center>
+</BorderPane>

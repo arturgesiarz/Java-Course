@@ -3,13 +3,20 @@ import agh.ics.oop.OptionsParser;
 import agh.ics.oop.Simulation;
 import agh.ics.oop.model.*;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -26,6 +33,7 @@ public class SimulationPresenter implements MapChangeListener {
     @FXML
     private Label infoLabel; // wyswietlanie tytlow -> oraz pozwala na zmianie tego
     private WorldMap map;
+    private int buttonStartClicked = 1;
     public void setWorldMap(WorldMap map){
         this.map = map;
     }
@@ -101,7 +109,9 @@ public class SimulationPresenter implements MapChangeListener {
         Platform.runLater(() -> drawMap(message)); //rysowanie mapy moze byc obslugiwane tylko przez jeden watek
     }
     @FXML
-    public void onSimulationStartClicked() { //zaczyna sie nasza symulacja
+    public void onSimulationStartClicked() throws IOException { //zaczyna sie nasza symulacja
+        argumentsField.setEditable(false); //blokuje mozliwosc edytowania tego co wlasnie wpisalismy
+
         String args = argumentsField.getText(); //pozyskuje argumenty wpisane
         String[] argsTab = args.split(" "); //dziele mojego stringa na tablice stringow po spacji
         List<Simulation> simulationList = new ArrayList<>();
@@ -115,9 +125,26 @@ public class SimulationPresenter implements MapChangeListener {
         simulationList.add(simulation);
 
         SimulationEngine simulationEngine = new SimulationEngine(simulationList);
-        simulationEngine.runAsync(); //urucham asynchronicznie moja symulacje - nie dodaje join -> bo zawisi to watek graficzny i nic z tego nie dostane!
+        simulationEngine.runAsyncInThreadPool(); //urucham asynchronicznie moja symulacje - nie dodaje join -> bo zawisi to watek graficzny i nic z tego nie dostane!
+
+        if(buttonStartClicked > 1){
+            Stage newStage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getClassLoader().getResource("parallelSimulation.fxml")); //tu nastepuje pobieranie informacji z fxml
+            BorderPane viewRoot = loader.load(); //tworze tutaj swoj widok
+            configureStage(newStage, viewRoot); //konfiguruje moj dodatkowy widok w tym miejscu
+            newStage.show();
+        }
+        buttonStartClicked ++; //poniewaz przycik zostal klikniety poraz kolejny
     }
     @FXML
-    public void onSimulationStopClicked() {
+    public void onSimulationStopClicked() {} //todo
+    private void configureStage(Stage primaryStage, BorderPane viewRoot) {
+        Scene scene = new Scene(viewRoot);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Simulation app - parallel version");
+        primaryStage.minWidthProperty().bind(viewRoot.minWidthProperty());
+        primaryStage.minHeightProperty().bind(viewRoot.minHeightProperty());
     }
+
 }

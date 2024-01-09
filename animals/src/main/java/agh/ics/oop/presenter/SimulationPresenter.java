@@ -118,6 +118,8 @@ public class SimulationPresenter implements MapChangeListener {
         String formattedDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         this.map.addObserver((WorldMap worldMap, String message) -> System.out.println(formattedDate + ' ' + message) );
 
+        //dodaje obserwatora do zapisywania pliku
+        this.map.addObserver(new FileMapDisplay());
 
         Simulation simulation = new Simulation(positions, directions,this.map); //tworze przyklada symulacje
         simulationList.add(simulation);

@@ -79,6 +79,7 @@ public abstract class AbstractWorldMap implements WorldMap {
 
     @Override
     public List<Animal> getOrderedAnimals(){
+
         // tworze liste zwierzat na mapie
         List<Animal> animalList = new ArrayList<>(animals.values());
 

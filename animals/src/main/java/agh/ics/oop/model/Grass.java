@@ -14,4 +14,9 @@ public class Grass implements WorldElement{
     public String toString(){
         return GRASS_SYMBOL;
     }
+
+    @Override
+    public String getFileName() {
+        return "grass.png";
+    }
 }

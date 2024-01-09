@@ -13,4 +13,5 @@ public interface WorldElement {
      * @return String
      */
     String toString();
+    String getFileName();
 }

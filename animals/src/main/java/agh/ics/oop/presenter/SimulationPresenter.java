@@ -16,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class SimulationPresenter implements MapChangeListener {
     private static final double CELL_WIDTH = 30; //stala sluzaca do okreslenia szerokosci okienka
@@ -74,12 +75,9 @@ public class SimulationPresenter implements MapChangeListener {
                         currentBounds.lowerLeftBoundary().getX() + i - 1,
                         currentBounds.lowerLeftBoundary().getY() + j - 1
                 );
-                if(Objects.nonNull(map.objectAt(actVector))){
-                    labelToAdd = new Label("" + map.objectAt(actVector));
-                }
-                else{
-                    labelToAdd = new Label("");
-                }
+
+                labelToAdd = new Label(map.objectAt(actVector).map(WorldElement::toString).orElse(""));
+
                 GridPane.setHalignment(labelToAdd, HPos.CENTER);
                 mapGrid.add(labelToAdd,j,i);
             }

@@ -29,14 +29,12 @@ public abstract class AbstractWorldMap implements WorldMap {
     }
     public abstract boolean canMoveTo(Vector2d position);
     public abstract Boundary getCurrentBounds();
-
     @Override
     public UUID getId() { //wyswietlam moje ID
         return worldMapID;
     }
-
-    public WorldElement objectAt(Vector2d position){
-        return animals.get(position);
+    public Optional<WorldElement> objectAt(Vector2d position){
+        return Optional.ofNullable(animals.get(position));
     }
     public void place(Animal animal) throws PositionAlreadyOccupiedException{
         if(canMoveTo(animal.getPosition())){

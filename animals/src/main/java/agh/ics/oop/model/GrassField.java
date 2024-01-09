@@ -4,6 +4,7 @@ import agh.ics.oop.model.util.MapVisualizer;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -30,9 +31,9 @@ public class GrassField extends AbstractWorldMap  {
         return grassMap;
     }
     @Override
-    public WorldElement objectAt(Vector2d position){
-        WorldElement objectAnimal = super.objectAt(position);
-        return objectAnimal != null ? objectAnimal : grassMap.get(position);
+    public Optional<WorldElement> objectAt(Vector2d position){
+        Optional<WorldElement> objectAnimal = super.objectAt(position);
+        return objectAnimal.isPresent() ? objectAnimal : Optional.ofNullable(grassMap.get(position));
     }
     @Override
     public boolean canMoveTo(Vector2d position) {

@@ -8,7 +8,6 @@ public class Simulation implements Runnable {
     private final List<Animal> animalsList;
     private final List<MoveDirection> movesList;
     private final WorldMap worldMap;
-
     public List<Animal> getAnimalsList() {
         return Collections.unmodifiableList(animalsList);
     }
@@ -21,8 +20,8 @@ public class Simulation implements Runnable {
             try{
                 worldMap.place(newAnimal);
                 animalsList.add(newAnimal);
-                Thread.sleep(500);
-            } catch (PositionAlreadyOccupiedException | InterruptedException e){
+                //Thread.sleep(500);
+            } catch (PositionAlreadyOccupiedException e){
                 e.printStackTrace();
             }
         }

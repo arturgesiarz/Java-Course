@@ -2,6 +2,7 @@ package agh.ics.oop.model;
 import agh.ics.oop.model.util.MapVisualizer;
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 public abstract class AbstractWorldMap implements WorldMap {
     protected final Map<Vector2d, Animal> animals = new HashMap<>();
@@ -70,11 +71,10 @@ public abstract class AbstractWorldMap implements WorldMap {
         }
     }
     public Map<Vector2d, WorldElement> getElements(){
-        Map<Vector2d, WorldElement> mapOfElements = new HashMap<>();
-        for(Vector2d positionAnimal : animals.keySet()){
-            mapOfElements.put(positionAnimal,animals.get(positionAnimal));
-        }
-        return mapOfElements;
+        return animals
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     @Override

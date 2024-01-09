@@ -1,7 +1,7 @@
 package agh.ics.oop.model;
 import agh.ics.oop.model.MoveDirection;
 import agh.ics.oop.model.Vector2d;
-
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -48,5 +48,6 @@ public interface WorldMap extends MoveValidator {
     UUID getId();
     void addObserver(MapChangeListener observer);
     void removeObserver(MapChangeListener observer);
+    List<Animal> getOrderedAnimals();
 
 }

@@ -14,4 +14,5 @@ public interface WorldElement {
      */
     String toString();
     String getFileName();
+    String getDescription();  // metoda zwracajaca opis danego elementu
 }

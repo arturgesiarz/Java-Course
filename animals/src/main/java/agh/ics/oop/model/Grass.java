@@ -19,4 +19,9 @@ public class Grass implements WorldElement{
     public String getFileName() {
         return "grass.png";
     }
+
+    @Override
+    public String getDescription() {
+        return "Grass";
+    }
 }

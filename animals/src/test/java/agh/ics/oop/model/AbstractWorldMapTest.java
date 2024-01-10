@@ -42,12 +42,7 @@ class AbstractWorldMapTest {
         // then
 
         // tworze liste wynika - czyli takie posortwanie jakie powininem wczesniej uzyskac
-        List<Animal> orderedAnimalSolution = new ArrayList<>();
-
-        orderedAnimalSolution.add(animalD);
-        orderedAnimalSolution.add(animalA);
-        orderedAnimalSolution.add(animalB);
-        orderedAnimalSolution.add(animalC);
+        List<Animal> orderedAnimalSolution = new ArrayList<>(List.of(animalD, animalA, animalB, animalC));
 
         // porownujemy czy obie listy sa sobie rowne
         assertEquals(orderedAnimalSolution, orderedAnimal);

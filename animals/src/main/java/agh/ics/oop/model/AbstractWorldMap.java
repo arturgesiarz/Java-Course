@@ -84,7 +84,7 @@ public abstract class AbstractWorldMap implements WorldMap {
                 .sorted(Comparator
                         .comparing((Animal a) -> a.getPosition().getX())
                         .thenComparing((Animal a) -> a.getPosition().getY()))
-                .collect(Collectors.toList());
+                .toList();
     }
     @Override
     public String toString() {

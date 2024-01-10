@@ -12,12 +12,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class SimulationPresenter implements MapChangeListener {
     private static final double CELL_WIDTH = 45; //stala sluzaca do okreslenia szerokosci okienka
@@ -117,15 +113,8 @@ public class SimulationPresenter implements MapChangeListener {
         List<Vector2d> positions = List.of(new Vector2d(0,2), new Vector2d(5,5),new Vector2d(10,10), new Vector2d(3,7)); //tworze przykladowe miejsce moich zwierzat
         this.setWorldMap(new GrassField(6));
 
-        //dodaje obserwatora
+        //dodaje obserwatora - tego jest konieczne abym go zostawil w tym miejscu
         this.map.addObserver(this);
-
-        //dodaje obserwatora zgodnie z poleceniem - jako lambde
-        String formattedDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        this.map.addObserver((WorldMap worldMap, String message) -> System.out.println(formattedDate + ' ' + message) );
-
-        //dodaje obserwatora do zapisywania pliku
-        this.map.addObserver(new FileMapDisplay());
 
         Simulation simulation = new Simulation(positions, directions,this.map); //tworze przyklada symulacje
         simulationList.add(simulation);

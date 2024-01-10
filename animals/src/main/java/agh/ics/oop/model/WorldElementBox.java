@@ -5,40 +5,43 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
-import java.util.Objects;
-
 public class WorldElementBox {
-    private Image image;
+    private static int IMAGE_WIDTH = 20;
+    private static int IMAGE_HEIGHT = 20;
+    private final Image image;
     private Label positionLabel;
     private VBox container;
 
     public WorldElementBox(WorldElement worldElement) {
+        this.image = new Image(worldElement.getFileName());  // zaciaganie obrazka
 
-        this.image = new Image(worldElement.getFileName());
+        ImageView imageView = setImageView();  // tworzenie widoku
+        initializationPositionLabel(worldElement);  // tworzenie positionLabel
+
+        this.container = initializationContainer(imageView);  // dodanie calosci do jednego kontenera
+    }
+
+    private ImageView setImageView() {
         ImageView imageView = new ImageView(image);
 
-        imageView.setFitWidth(20);
-        imageView.setFitHeight(20);
+        imageView.setFitWidth(IMAGE_WIDTH);
+        imageView.setFitHeight(IMAGE_HEIGHT);
 
-        if(Objects.equals(worldElement.toString(), "*")){
-            this.positionLabel = new Label("Grass");
-        }
-        else{
-            this.positionLabel = new Label(worldElement.getPosition().toString());
-        }
+        return imageView;
+    }
 
+    private void initializationPositionLabel(WorldElement worldElement) {
+        this.positionLabel = new Label(worldElement.getDescription());
+    }
+
+    private VBox initializationContainer(ImageView imageView) {
         this.container = new VBox();
-        this.container.getChildren().addAll(imageView, positionLabel);
+        this.container.getChildren().addAll(imageView, this.positionLabel);
         this.container.setAlignment(Pos.CENTER);
+
+        return container;
     }
 
-    public Image getImage() {
-        return image;
-    }
-
-    public Label getPositionLabel() {
-        return positionLabel;
-    }
     public VBox getContainer(){
         return container;
     }

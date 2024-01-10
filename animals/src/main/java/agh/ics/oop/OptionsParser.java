@@ -27,6 +27,6 @@ public class OptionsParser {
                             }
                         }
                 )
-                .collect(Collectors.toList());
+                .toList();
     }
 }

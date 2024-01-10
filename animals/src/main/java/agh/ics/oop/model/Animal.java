@@ -54,12 +54,18 @@ public class Animal implements WorldElement{
 
     @Override
     public String getFileName() {
+        // kierunki sa odwrocone poniewaz, takze mamy po prostu obrocona os
         return switch (this.orientation){
             case NORTH  ->  "down.png";
-            case SOUTH  ->  "up.png";  // jest to na odwrot aby bylo bardziej jasne
-            case EAST   ->  "right.png";
-            case WEST   ->  "left.png";
+            case SOUTH  ->  "up.png";
+            case EAST   ->  "left.png";
+            case WEST   ->  "right.png";
         };
+    }
+
+    @Override
+    public String getDescription() {
+        return "A: " + this.getPosition();
     }
 
     @Override

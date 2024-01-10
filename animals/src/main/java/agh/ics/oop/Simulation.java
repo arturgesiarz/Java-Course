@@ -1,5 +1,8 @@
 package agh.ics.oop;
 import agh.ics.oop.model.*;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,6 +16,14 @@ public class Simulation implements Runnable {
     }
 
     public Simulation(List<Vector2d> positionsList, List<MoveDirection> movesList, WorldMap worldMap){
+
+        //dodaje obserwatora dodatkowego jako lambde
+        String formattedDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        worldMap.addObserver((WorldMap map, String message) -> System.out.println(formattedDate + ' ' + message) );
+
+        //dodaje obserwatora do zapisywania pliku
+        worldMap.addObserver(new FileMapDisplay());
+
         List<Animal> animalsList = new ArrayList<>();
 
         for(Vector2d position : positionsList){
@@ -20,7 +31,6 @@ public class Simulation implements Runnable {
             try{
                 worldMap.place(newAnimal);
                 animalsList.add(newAnimal);
-                //Thread.sleep(500);
             } catch (PositionAlreadyOccupiedException e){
                 e.printStackTrace();
             }

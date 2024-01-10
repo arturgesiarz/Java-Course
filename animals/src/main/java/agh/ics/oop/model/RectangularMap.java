@@ -13,7 +13,7 @@ public class RectangularMap extends AbstractWorldMap {
     }
     @Override
     public Boundary getCurrentBounds(){
-        return new Boundary(lowerLeft,upperRight);
+        return new Boundary(lowerLeft.add(new Vector2d(-1, -1)),upperRight.add(new Vector2d(1, 1)));
     }
     @Override
     public boolean equals(Object o) {

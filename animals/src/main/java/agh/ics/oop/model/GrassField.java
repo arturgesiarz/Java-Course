@@ -4,6 +4,9 @@ import agh.ics.oop.model.util.MapVisualizer;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class GrassField extends AbstractWorldMap  {
     private final Map<Vector2d, Grass> grassMap;
@@ -28,9 +31,9 @@ public class GrassField extends AbstractWorldMap  {
         return grassMap;
     }
     @Override
-    public WorldElement objectAt(Vector2d position){
-        WorldElement objectAnimal = super.objectAt(position);
-        return objectAnimal != null ? objectAnimal : grassMap.get(position);
+    public Optional<WorldElement> objectAt(Vector2d position){
+        Optional<WorldElement> objectAnimal = super.objectAt(position);
+        return objectAnimal.isPresent() ? objectAnimal : Optional.ofNullable(grassMap.get(position));
     }
     @Override
     public boolean canMoveTo(Vector2d position) {
@@ -39,12 +42,17 @@ public class GrassField extends AbstractWorldMap  {
     @Override
     public Map<Vector2d, WorldElement> getElements(){
         Map<Vector2d, WorldElement> mapOfElements = super.getElements();
-        for(Vector2d positionGrass : grassMap.keySet()){
-            if(!mapOfElements.containsKey(positionGrass)){
-                mapOfElements.put(positionGrass,grassMap.get(positionGrass));
-            }
-        }
-        return mapOfElements;
+
+        return Stream.concat(
+                mapOfElements
+                        .entrySet()
+                        .stream(),
+                grassMap
+                        .entrySet()
+                        .stream()
+                        .filter(grass -> !mapOfElements.containsKey(grass.getKey()))
+        ).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
     }
     @Override
     public Boundary getCurrentBounds(){

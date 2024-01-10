@@ -4,6 +4,8 @@
 .gradle/
 build/
 
+logs/
+
 # User-specific stuff
 .idea/**/workspace.xml
 .idea/**/tasks.xml

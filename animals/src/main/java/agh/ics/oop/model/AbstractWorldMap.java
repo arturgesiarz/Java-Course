@@ -2,6 +2,7 @@ package agh.ics.oop.model;
 import agh.ics.oop.model.util.MapVisualizer;
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 public abstract class AbstractWorldMap implements WorldMap {
     protected final Map<Vector2d, Animal> animals = new HashMap<>();
@@ -28,14 +29,12 @@ public abstract class AbstractWorldMap implements WorldMap {
     }
     public abstract boolean canMoveTo(Vector2d position);
     public abstract Boundary getCurrentBounds();
-
     @Override
     public UUID getId() { //wyswietlam moje ID
         return worldMapID;
     }
-
-    public WorldElement objectAt(Vector2d position){
-        return animals.get(position);
+    public Optional<WorldElement> objectAt(Vector2d position){
+        return Optional.ofNullable(animals.get(position));
     }
     public void place(Animal animal) throws PositionAlreadyOccupiedException{
         if(canMoveTo(animal.getPosition())){
@@ -69,12 +68,23 @@ public abstract class AbstractWorldMap implements WorldMap {
                     " moved to " + animal.getPosition());
         }
     }
+    @Override
     public Map<Vector2d, WorldElement> getElements(){
-        Map<Vector2d, WorldElement> mapOfElements = new HashMap<>();
-        for(Vector2d positionAnimal : animals.keySet()){
-            mapOfElements.put(positionAnimal,animals.get(positionAnimal));
-        }
-        return mapOfElements;
+        return animals
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    @Override
+    public List<Animal> getOrderedAnimals(){
+        return animals
+                .values()  // pobieranie samych wartosci
+                .stream()
+                .sorted(Comparator
+                        .comparing((Animal a) -> a.getPosition().getX())
+                        .thenComparing((Animal a) -> a.getPosition().getY()))
+                .toList();
     }
     @Override
     public String toString() {

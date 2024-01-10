@@ -5,24 +5,30 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
+import java.util.Objects;
+
 public class WorldElementBox {
-    private final Image image;
-    private final Label positionLabel;
-    private final VBox container;
+    private Image image;
+    private Label positionLabel;
+    private VBox container;
 
-    public WorldElementBox(String imageUrl, String position) {
+    public WorldElementBox(WorldElement worldElement) {
 
-        this.image = new Image(imageUrl);
+        this.image = new Image(worldElement.getFileName());
         ImageView imageView = new ImageView(image);
 
         imageView.setFitWidth(20);
         imageView.setFitHeight(20);
 
-        this.positionLabel = new Label(position);
+        if(Objects.equals(worldElement.toString(), "*")){
+            this.positionLabel = new Label("Grass");
+        }
+        else{
+            this.positionLabel = new Label(worldElement.getPosition().toString());
+        }
 
         this.container = new VBox();
         this.container.getChildren().addAll(imageView, positionLabel);
-
         this.container.setAlignment(Pos.CENTER);
     }
 

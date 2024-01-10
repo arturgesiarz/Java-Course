@@ -68,6 +68,7 @@ public abstract class AbstractWorldMap implements WorldMap {
                     " moved to " + animal.getPosition());
         }
     }
+    @Override
     public Map<Vector2d, WorldElement> getElements(){
         return animals
                 .entrySet()

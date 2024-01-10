@@ -7,7 +7,7 @@ import java.io.IOException;
 public class FileMapDisplay implements MapChangeListener{
     @Override
     public void mapChanged(WorldMap worldMap, String message) {
-        String logFileName = "map_" + worldMap.getId() + ".log";
+        String logFileName = "logs/map_" + worldMap.getId() + ".log";
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(logFileName, true))) {
             // wypisuje infomracje o ruchu

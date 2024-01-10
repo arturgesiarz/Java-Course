@@ -55,8 +55,8 @@ public class Animal implements WorldElement{
     @Override
     public String getFileName() {
         return switch (this.orientation){
-            case NORTH  ->  "up.png";
-            case SOUTH  ->  "down.png";
+            case NORTH  ->  "down.png";
+            case SOUTH  ->  "up.png";  // jest to na odwrot aby bylo bardziej jasne
             case EAST   ->  "right.png";
             case WEST   ->  "left.png";
         };

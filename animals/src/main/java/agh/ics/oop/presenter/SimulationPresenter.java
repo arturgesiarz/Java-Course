@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.VBox;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -19,8 +20,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class SimulationPresenter implements MapChangeListener {
-    private static final double CELL_WIDTH = 30; //stala sluzaca do okreslenia szerokosci okienka
-    private static final double CELL_HEIGHT = 30; //stala sluzaca do okreslenia wysokosci okienka
+    private static final double CELL_WIDTH = 45; //stala sluzaca do okreslenia szerokosci okienka
+    private static final double CELL_HEIGHT = 45; //stala sluzaca do okreslenia wysokosci okienka
     @FXML
     private GridPane mapGrid;
     @FXML
@@ -40,10 +41,10 @@ public class SimulationPresenter implements MapChangeListener {
     }
     private void createRawGrid(int noRows, int noCols){
 
-        for(int i = 0; i < noRows; i++){
+        for(int i = 0; i <= noRows; i++){
             mapGrid.getRowConstraints().add(new RowConstraints(CELL_HEIGHT)); //ustawianie wysokosci komorki
         }
-        for(int i = 0; i < noCols; i++){
+        for(int i = 0; i <= noCols; i++){
             mapGrid.getColumnConstraints().add(new ColumnConstraints(CELL_WIDTH)); //ustawianie szeroskosci komorki
         }
     }
@@ -55,31 +56,36 @@ public class SimulationPresenter implements MapChangeListener {
         GridPane.setHalignment(labelToAdd, HPos.CENTER);
         mapGrid.add(labelToAdd,0,0);
 
-        for(int i = 1; i < noCols; i ++){ //dodaje naglowki dla kolumn
-            labelToAdd = new Label("" + (currentBounds.lowerLeftBoundary().getX() + i - 1));
+        for(int i = 0; i <= noRows; i ++){ //dodaje naglowki dla kolumn
+            labelToAdd = new Label("" + (currentBounds.lowerLeftBoundary().getX() + i));
             GridPane.setHalignment(labelToAdd, HPos.CENTER);
-            mapGrid.add(labelToAdd,i,0);
+            mapGrid.add(labelToAdd,i + 1,0);
         }
 
-        for(int i = 1; i < noRows; i ++){ //dodaje naglowki dla wierszy
-            labelToAdd = new Label("" + (currentBounds.lowerLeftBoundary().getY() + i - 1));
+        for(int i = 0; i <= noCols; i ++){ //dodaje naglowki dla wierszy
+            labelToAdd = new Label("" + (currentBounds.lowerLeftBoundary().getY() + i));
             GridPane.setHalignment(labelToAdd, HPos.CENTER);
-            mapGrid.add(labelToAdd,0,i);
+            mapGrid.add(labelToAdd,0,i + 1);
         }
     }
     private void complementsRestGrid(int noRows, int noCols, Boundary currentBounds){ //metoda uzupelnia reszte calego grida -> aktualizuje przemieszczanie sie
-        Label labelToAdd;
-        for(int i = 1; i < noRows; i ++){
-            for(int j = 1; j < noCols; j ++){
+        VBox vBoxToAdd;
+        for(int i = 0; i <= noRows; i ++){
+            for(int j = 0; j <= noCols; j ++){
                 Vector2d actVector = new Vector2d(
-                        currentBounds.lowerLeftBoundary().getX() + i - 1,
-                        currentBounds.lowerLeftBoundary().getY() + j - 1
+                        currentBounds.lowerLeftBoundary().getX() + j,
+                        currentBounds.lowerLeftBoundary().getY() + i
                 );
+                WorldElement worldElement = map.objectAt(actVector).orElse(null);
+                if (worldElement != null) {
+                    vBoxToAdd = new WorldElementBox(worldElement).getContainer();
+                } else {
+                    vBoxToAdd = new VBox(new Label(""));
+                }
+                // labelToAdd = new Label(map.objectAt(actVector).map(WorldElement::toString).orElse(""));
 
-                labelToAdd = new Label(map.objectAt(actVector).map(WorldElement::toString).orElse(""));
-
-                GridPane.setHalignment(labelToAdd, HPos.CENTER);
-                mapGrid.add(labelToAdd,j,i);
+                GridPane.setHalignment(vBoxToAdd, HPos.CENTER);
+                mapGrid.add(vBoxToAdd,j + 1,i + 1);
             }
         }
     }

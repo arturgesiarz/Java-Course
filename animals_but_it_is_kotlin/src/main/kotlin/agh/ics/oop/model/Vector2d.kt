@@ -2,13 +2,19 @@ package agh.ics.oop.model
 
 data class Vector2d(val x: Int, val y: Int) {
 
-    fun precedes(other: Vector2d) = other.x >= x && other.y >= y
+    operator fun compareTo(other: Vector2d): Int {
+        if (other.x <= x && other.y < y || other.x < x && other.y <= y)
+            return 1
 
-    fun follows(other: Vector2d) = other.x <= x && other.y <= y
+        else if (this == other)
+            return 0
 
-    fun add(other: Vector2d)= Vector2d(x + other.x, y + other.y)
+        return -1
+    }
 
-    fun subtract(other: Vector2d) = Vector2d(x - other.x, y - other.y)
+    operator fun plus(other: Vector2d): Vector2d = Vector2d(x + other.x, y + other.y)
+
+    operator fun minus(other: Vector2d): Vector2d = Vector2d(x - other.x, y - other.y)
 
     fun upperRight(other: Vector2d) = Vector2d(Math.max(other.x, x), Math.max(other.y, y))
 
@@ -16,7 +22,5 @@ data class Vector2d(val x: Int, val y: Int) {
 
     fun opposite() = Vector2d(-x, -y)
 
-    override fun toString(): String {
-        return "($x,$y)"
-    }
+    override fun toString(): String = "($x,$y)"
 }

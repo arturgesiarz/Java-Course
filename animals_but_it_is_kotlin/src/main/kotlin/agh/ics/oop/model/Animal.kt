@@ -1,9 +1,9 @@
 package agh.ics.oop.model
 
-class Animal (private var position: Vector2d = Vector2d(2, 2)) {
+class Animal(private var position: Vector2d = Vector2d(2, 2)) : WorldElement{
     private var orientation = MapDirection.NORTH
 
-    fun getPosition(): Vector2d = position
+    override fun getPosition(): Vector2d = position
 
     fun getOrientation(): MapDirection = orientation
 

@@ -1,11 +1,7 @@
 package agh.ics.oop.model
 
-class Animal(private var position: Vector2d = Vector2d(2, 2)) : WorldElement{
-    private var orientation = MapDirection.NORTH
-
-    override fun getPosition(): Vector2d = position
-
-    fun getOrientation(): MapDirection = orientation
+data class Animal(var position: Vector2d = Vector2d(2, 2)) : WorldElement{
+    var orientation = MapDirection.NORTH
 
     fun isAt(position: Vector2d): Boolean = position == this.position
 

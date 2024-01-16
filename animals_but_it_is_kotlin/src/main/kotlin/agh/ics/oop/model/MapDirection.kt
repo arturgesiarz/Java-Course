@@ -24,15 +24,6 @@ enum class MapDirection {
         }
     }
 
-    fun toUnitVector(): Vector2d {
-        return when (this) {
-            NORTH -> Vector2d(0, 1)
-            SOUTH -> Vector2d(0, -1)
-            WEST -> Vector2d(-1, 0)
-            EAST -> Vector2d(1, 0)
-        }
-    }
-
     override fun toString(): String {
         return when (this) {
             NORTH -> "Północ"
